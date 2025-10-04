@@ -24,7 +24,7 @@ export function ThreeDCardDemo({id, heading, subHeading, src }:CardProps) {
                 <CardItem
                     as="p"
                     translateZ="60"
-                    className="text-neutral-500 text-sm max-w-sm mt-2 dark:text-neutral-300"
+                    className="text-neutral-500 text-sm max-w-sm mt-2 dark:text-neutral-300 line-clamp-4"
                 >
                     {subHeading}
                 </CardItem>
