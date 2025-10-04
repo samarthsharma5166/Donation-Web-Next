@@ -4,7 +4,8 @@ import { ThreeDCardDemo } from './ThreeDCardDemo'
 import axios from 'axios'
 
 const BlogsSection = async() => {
-  const blogs = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/blog?page=${1}&limit=${6}`);
+  const baseUrl = "https://donation-web-next.vercel.app/";
+  const blogs = await axios.get(`${baseUrl}/api/blog?page=${1}&limit=${6}`);
   return (
     <div className='py-8'>
         <SectionHeader heading="Latest Blogs" />
