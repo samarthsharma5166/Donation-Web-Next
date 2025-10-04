@@ -4,7 +4,7 @@ import { ThreeDCardDemo } from './ThreeDCardDemo'
 import axios from 'axios'
 
 const BlogsSection = async() => {
-  const blogs = await axios.get(`http://localhost:3000/api/blog?page=${1}&limit=${6}`);
+  const blogs = await axios.get(`${process.env.BASE_URL}/api/blog?page=${1}&limit=${6}`);
   return (
     <div className='py-8'>
         <SectionHeader heading="Latest Blogs" />
