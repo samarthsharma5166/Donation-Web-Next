@@ -4,7 +4,7 @@ import { ThreeDCardDemo } from './ThreeDCardDemo'
 import axios from 'axios'
 
 const BlogsSection = async() => {
-  const baseUrl = "https://donation-web-next.vercel.app/";
+  const baseUrl = "https://www.madhavamfoundation.com/";
   const blogs = await axios.get(`${baseUrl}/api/blog?page=${1}&limit=${6}`);
   return (
     <div className='py-8'>

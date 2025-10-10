@@ -9,7 +9,7 @@ type PageProps = {
 export default async function BlogPage({ params }: PageProps) {
   const { id } = await params; // ✅ no need to await
   // || process.env.BASE_URL
-  const baseUrl = "https://donation-web-next.vercel.app/" ;
+  const baseUrl = "https://www.madhavamfoundation.com/" ;
   const res = await axios.get(`${baseUrl}/api/blog/${id}`);
 
   return (
