@@ -2,7 +2,7 @@
 
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import React from "react";
+import React, { Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Field,
@@ -22,6 +22,7 @@ import { useForm } from "react-hook-form";
 import Script from "next/script";
 import axios from 'axios';
 import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 interface DonationFormData {
   name: string;
@@ -37,7 +38,7 @@ interface DonationFormData {
 }
 
 const DonationPage = () => {
-  const { register, handleSubmit, setValue, reset } = useForm();
+  const { register, handleSubmit, setValue, reset } = useForm<DonationFormData>();
 
   const createOrder = async(data:DonationFormData)=>{
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
@@ -75,7 +76,7 @@ const DonationPage = () => {
   };
 
   return (
-    <>
+    <Suspense fallback={<div className="flex justify-center items-center h-screen"><Loader2 className="animate-spin text-gray-500 w-8 h-8" /></div>}>
       <Script src="https://checkout.razorpay.com/v1/checkout.js" />
       <Header />
 
@@ -189,7 +190,7 @@ const DonationPage = () => {
       </main>
 
       <Footer />
-    </>
+    </Suspense>
   );
 };
 
