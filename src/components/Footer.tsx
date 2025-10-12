@@ -43,12 +43,12 @@ const Footer = ({ searchParams }: FooterProps ) => {
                     <ul className="space-y-3">
                         <li className="flex items-center gap-2 hover:text-[#b08c61] cursor-pointer">
                             <a href="https://www.facebook.com/share/1Fr2DpmZMA/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-                                <Instagram size={18} /> Instagram
+                                <Facebook size={18} /> Facebook
                             </a>
                         </li>
                         <li className="flex items-center gap-2 hover:text-[#b08c61] cursor-pointer">
                             <a href="https://www.instagram.com/madhavamfoundationvrindavan?igsh=ZjJjMjVrc3J6bXo3" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-                                <Facebook size={18} /> Facebook
+                                <Instagram size={18} /> Instagram
                             </a>
                         </li>
                         <li className="flex items-center gap-2 hover:text-[#b08c61] cursor-pointer">
