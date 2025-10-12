@@ -18,11 +18,11 @@ const headerItems = [
         icon: <FaLocationDot className={iconClass} />
     },
     {
-        text: "Info@gmail.com",
+        text: "madhavamfoundation99@gmail.com ",
         icon: <IoIosMail className={iconClass} />
     },
     {
-        text: "+1234-5678",
+        text: "917906869998",
         icon: <FaPhoneAlt className={iconClass} />
     },
 ]
