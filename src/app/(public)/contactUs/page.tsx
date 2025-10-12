@@ -36,13 +36,13 @@ const page = () => {
                                     <div>
                                         <p className="font-semibold">Phone / WhatsApp</p>
                                         <a
-                                            href="tel:+919876543210"
+                                            href="tel:+917906869998"
                                             className="text-blue-600 hover:underline block"
                                         >
                                             +91 98765 43210 (Call)
                                         </a>
                                         <a
-                                            href="https://wa.me/919876543210"
+                                            href="https://wa.me/917906869998"
                                             target="_blank"
                                             className="text-green-600 hover:underline block"
                                         >
@@ -56,10 +56,10 @@ const page = () => {
                                     <div>
                                         <p className="font-semibold">Email</p>
                                         <a
-                                            href="mailto:info@example.com"
+                                            href="mailto:madhavamfoundation99@gmail.com "
                                             className="text-blue-600 hover:underline"
                                         >
-                                            info@example.com
+                                            madhavamfoundation99@gmail.com 
                                         </a>
                                     </div>
                                 </div>
@@ -69,7 +69,7 @@ const page = () => {
                                     <div>
                                         <p className="font-semibold">Office Address</p>
                                         <p className="text-muted-foreground">
-                                            123 Business Street, New Delhi, India
+                                            Shree Vidhya Peeth, Sanskrit Chatravvas, Shyam Kuti, Chetra Prikrima Marg
                                         </p>
                                     </div>
                                 </div>
