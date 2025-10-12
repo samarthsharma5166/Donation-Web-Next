@@ -54,7 +54,7 @@ const Header = () => {
     const lang = searchParams.get("lang");
   return (
       <header>
-        <div className='h-10 bg-black text-white flex items-center'>
+        <div className='h-10 hidden md:flex bg-black text-white  items-center'>
               <div className='container  mx-auto flex flex-row gap-3 px-2 sm:px-0 md:px-4 sm:gap-8 cursor-pointer'>
                 {
                     headerItems.map((item,index)=>
