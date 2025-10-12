@@ -16,7 +16,7 @@ const MobileMenu = () => {
       />
       {/* ====== Sidebar ====== */}
       {model && (
-        <div className='fixed z-50 top-0 right-0 w-3/4 h-screen shadow-lg shadow-sidebar-primary border-sidebar bg-white'>
+        <div className='fixed z-50 top-0 right-0 w-3/4 h-screen overflow-y-scroll shadow-lg shadow-sidebar-primary border-sidebar bg-white'>
           <div className='flex flex-col h-full'>
             {/* Close button */}
             <div className='flex justify-between border-b py-4 px-3'>
@@ -46,15 +46,18 @@ const MobileMenu = () => {
 
               {/* Buttons */}
               <div className='flex flex-col items-center gap-3 sm:gap-6 py-6'>
-                <Button
-                  className='text-[#867156] text-md transition-transform duration-300 hover:scale-110 hover:-translate-y-1'
-                  size={"lg"}
-                  variant={"link"}
-                >
-                  Contact Us
-                </Button>
-                <Button className='bg-[#867156] hover:bg-[#8b7e6c] transition-transform duration-300 hover:-translate-y-1 hover:scale-110'>
-                  Donate Now
+                  <Button
+                    className='text-[#867156] text-md transition-transform duration-300 hover:scale-110 hover:-translate-y-1'
+                    size={"lg"}
+                    variant={"link"}
+                    asChild
+                  >
+                <Link href={"/contactUs"}>
+                    Contact Us
+                </Link>
+                  </Button>
+                <Button asChild className='bg-[#867156] hover:bg-[#8b7e6c] transition-transform duration-300 hover:-translate-y-1 hover:scale-110'>
+                  <Link href={"/donate"}>Donate Now</Link>
                 </Button>
               </div>
             </div>
