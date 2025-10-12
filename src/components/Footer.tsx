@@ -4,6 +4,7 @@ import React from "react";
 import { Button } from "./ui/button";
 import { Instagram, Facebook, Youtube } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 type FooterProps = {
     searchParams?: Record<string, string | string[]>;
@@ -30,10 +31,9 @@ const Footer = ({ searchParams }: FooterProps ) => {
             <div className="container mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-4 gap-10">
                 {/* Logo & Text */}
                 <div>
-                    <h3 className="text-lg font-bold mb-3">LOGO</h3>
+                    <Image src={"/Frame 7.png"} alt='logo' className='sm:w-40 w-30 mb-3'  width={150} height={150}/>
                     <p className="text-gray-300 text-sm leading-relaxed">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse
-                        ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
+                        The smallest act of kindness is worth more than the grandest intention.
                     </p>
                 </div>
 
@@ -42,20 +42,26 @@ const Footer = ({ searchParams }: FooterProps ) => {
                     <h3 className="text-lg font-semibold mb-3">Social Links</h3>
                     <ul className="space-y-3">
                         <li className="flex items-center gap-2 hover:text-[#b08c61] cursor-pointer">
-                            <Instagram size={18} /> Instagram
+                            <a href="https://www.facebook.com/share/1Fr2DpmZMA/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                                <Instagram size={18} /> Instagram
+                            </a>
                         </li>
                         <li className="flex items-center gap-2 hover:text-[#b08c61] cursor-pointer">
-                            <Facebook size={18} /> Facebook
+                            <a href="https://www.instagram.com/madhavamfoundationvrindavan?igsh=ZjJjMjVrc3J6bXo3" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                                <Facebook size={18} /> Facebook
+                            </a>
                         </li>
                         <li className="flex items-center gap-2 hover:text-[#b08c61] cursor-pointer">
-                            <Youtube size={18} /> Youtube
+                            <a href="https://youtube.com/@madhavamfoundationvrindavan?si=CI9_poutSGKMFCb1" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                                <Youtube size={18} /> Youtube
+                            </a>
                         </li>
                     </ul>
                 </div>
 
                 {/* Resources */}
                 <div>
-                    <h3 className="text-lg font-semibold mb-3">Resources</h3>
+                    <h3 className="text-lg font-semibold mb-3">Policies</h3>
                     <ul className="space-y-3">
                         <li>
                             <Link href="/contact" className="hover:text-[#b08c61]">
@@ -77,12 +83,24 @@ const Footer = ({ searchParams }: FooterProps ) => {
 
                 {/* Address */}
                 <div>
-                    <h3 className="text-lg font-semibold mb-3">Address</h3>
-                    <p className="text-sm text-gray-300">660 Brooklyn street, New York street</p>
-                    <p className="text-sm text-gray-300 mt-2">
-                        <span className="block font-medium">Email</span>
-                        user@gmail.com
-                    </p>
+                    <h3 className="text-lg font-semibold mb-3">Resources</h3>
+                    <ul className="space-y-3">
+                        <li>
+                            <Link href="/privacyPolicy" className="hover:text-[#b08c61]">
+                                Privacy Policy
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href="/RefundCancellationPolicy" className="hover:text-[#b08c61]">
+                                Refund Policy
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href="/termsOfUse" className="hover:text-[#b08c61]">
+                                Terms of Use
+                            </Link>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </footer>
