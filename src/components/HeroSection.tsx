@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 const heroSectionContent = [
     {
@@ -63,8 +64,8 @@ const HeroSection = () => {
                     </div>
                 ))}
 
-                <Button size={"lg"} className="absolute z-40 shadow-black shadow-md hover:bg-[#8b7e6c] hover:-translate-y-1 scale-110 hover:scale-125 transition-transform duration-300 ease-in-out hidden sm:block sm:bottom-10 md:bottom-[20rem] lg:bottom-10 xl:bottom-[8rem] 2xl:bottm-74 bg-[#867156]  left-1/2 -translate-x-1/2">
-                    {lang === "hn" ? "दान करें" : "Donate Now"}
+                <Button asChild size={"lg"} className="absolute z-40  justify-center items-center shadow-black shadow-md hover:bg-[#8b7e6c] hover:-translate-y-1 scale-110 hover:scale-125 transition-transform duration-300 ease-in-out hidden sm:flex sm:bottom-10 md:bottom-[20rem] lg:bottom-10 xl:bottom-[8rem] 2xl:bottm-74 bg-[#867156]  left-1/2 -translate-x-1/2">
+                    <Link href={"/donate"}>{lang === "hn" ? "दान करें" : "Donate Now"}</Link>
                 </Button>
                 
                 <div className="absolute z-40 bottom-5 2xl:bottom-14 md:bottom-8  left-1/2 -translate-x-1/2 flex gap-3">

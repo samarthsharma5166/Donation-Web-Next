@@ -47,13 +47,19 @@ const ContactPage = () => {
                                     <div>
                                         <p className="font-semibold">Phone / WhatsApp</p>
                                         <a
-                                            href="tel:+919876543210"
+                                            href="tel:+917906869998"
                                             className="text-blue-600 hover:underline block text-sm sm:text-base"
                                         >
-                                            +91 98765 43210 (Call)
+                                            +91 7906869998 (Call)
                                         </a>
                                         <a
-                                            href="https://wa.me/919876543210"
+                                            href="tel:+919520812589"
+                                            className="text-blue-600 hover:underline block text-sm sm:text-base"
+                                        >
+                                            +91 9520812589 (Call)
+                                        </a>
+                                        <a
+                                            href="https://wa.me/917906869998"
                                             target="_blank"
                                             className="text-green-600 hover:underline block text-sm sm:text-base"
                                         >

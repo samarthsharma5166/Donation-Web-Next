@@ -32,9 +32,9 @@ const Footer = ({ searchParams }: FooterProps ) => {
                 {/* Logo & Text */}
                 <div>
                     <Image src={"/Frame 7.png"} alt='logo' className='sm:w-40 w-30 mb-3'  width={150} height={150}/>
-                    <p className="text-gray-300 text-sm leading-relaxed">
+                    {/* <p className="text-gray-300 text-sm leading-relaxed">
                         The smallest act of kindness is worth more than the grandest intention.
-                    </p>
+                    </p> */}
                 </div>
 
                 {/* Social Links */}
