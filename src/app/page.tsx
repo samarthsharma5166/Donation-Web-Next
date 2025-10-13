@@ -5,6 +5,7 @@ import BlogsSection from "@/components/BlogsSection";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import WhatAppButton from "@/components/WhatAppButton";
+import CallButton from "@/components/CallButton";
 
 type SearchParams = Promise<{ lang: string }>
 export default async function Home({ searchParams }: { searchParams: SearchParams }) {
@@ -12,6 +13,7 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
 
   return (
     <>
+      <CallButton/>
       <WhatAppButton/>
       <Header />
       <HeroSection />
