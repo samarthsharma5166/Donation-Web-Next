@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin, Loader2 } from "lucide-react";
+import Footer from "@/components/Footer";
 
 const ContactPage = () => {
     return (
@@ -88,7 +89,7 @@ const ContactPage = () => {
                                     <div>
                                         <p className="font-semibold">Office Address</p>
                                         <p className="text-muted-foreground text-sm sm:text-base">
-                                            Shree Vidhya Peeth, Sanskrit Chatravvas, Shyam Kuti, Chetra Prikrima Marg
+                                            Shree Vidhya Peeth, Sanskrit Chatravvas, Shyam Kuti, Chetra Prikrima Marg Vridavan, Mathura UP ,281121
                                         </p>
                                     </div>
                                 </div>
@@ -123,6 +124,7 @@ const ContactPage = () => {
                     </motion.div>
                 </div>
             </main>
+            <Footer/>
         </Suspense>
     );
 };

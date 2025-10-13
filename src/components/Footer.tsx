@@ -64,7 +64,7 @@ const Footer = ({ searchParams }: FooterProps ) => {
                     <h3 className="text-lg font-semibold mb-3">Policies</h3>
                     <ul className="space-y-3">
                         <li>
-                            <Link href="/contact" className="hover:text-[#b08c61]">
+                            <Link href="/contactUs" className="hover:text-[#b08c61]">
                                 Contact Us
                             </Link>
                         </li>
@@ -74,7 +74,7 @@ const Footer = ({ searchParams }: FooterProps ) => {
                             </Link>
                         </li>
                         <li>
-                            <Link href="/about" className="hover:text-[#b08c61]">
+                            <Link href="/aboutUs" className="hover:text-[#b08c61]">
                                 About Us
                             </Link>
                         </li>
