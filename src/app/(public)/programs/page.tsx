@@ -3,6 +3,8 @@ import AnimatedPara from '@/components/AnimatedPara'
 import SectionHeader from '@/components/SectionHeader'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 const programs = {
   en: [
@@ -139,8 +141,12 @@ const Page = async({ searchParams }: { searchParams: SearchParams }) => {
 
   return (
     <>
+
       <Header />
       <main className="container p-4 sm:p-0 mx-auto py-12">
+        <Button className='fixed z-40 left-4 bottom-4 bg-[#867156] hover:bg-[#8b7e6c] transition-transform duration-300 hover:-translate-y-1 hover:scale-110'>
+          <Link href={"/donate"}>Donate Now</Link>
+        </Button>
         <div className="py-8">
           <SectionHeader heading={lang === "hn" ? "हमारे कार्यक्रम" : "Our Programs"} />
         </div>

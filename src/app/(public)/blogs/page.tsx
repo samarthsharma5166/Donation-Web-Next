@@ -14,6 +14,8 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 const page = () => {
       const [modelOpen, setModalOpen] = useState(false);
@@ -50,6 +52,9 @@ const page = () => {
    <Suspense fallback={<div className="flex justify-center items-center h-screen"><Loader2 className="animate-spin text-gray-500 w-8 h-8" /></div>}>
           <Header />
           <div className='py-8'>
+            <Button className='fixed z-40 left-4 bottom-4 bg-[#867156] hover:bg-[#8b7e6c] transition-transform duration-300 hover:-translate-y-1 hover:scale-110'>
+                                                <Link href={"/donate"}>Donate Now</Link>
+                    </Button>
               <SectionHeader heading="Latest Blogs" />
               <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 container px-4 mx-auto sm:px-0'>
                   {loading ? (

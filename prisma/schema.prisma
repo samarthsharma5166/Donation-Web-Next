@@ -33,3 +33,24 @@ model Blog {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
+
+model payments {
+    id      Int @id @default(autoincrement())
+    name    String
+    email   String
+    phone   String
+    address String
+    country String
+    state   String
+    pincode String
+    dob     DateTime
+    comments String?
+    amount  Int
+    razorpayOrderId String?
+    razorPayPaymentId String?
+    razorpaySignature String?
+    subscriptionId  String?
+    paymentStatus String @default("pending")
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
