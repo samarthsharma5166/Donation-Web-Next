@@ -69,7 +69,7 @@ const Header = () => {
         <div className='shadow-md h-20'>
           <nav className='container  mx-auto flex flex-row items-center justify-between gap-3 px-2 sm:px-0 md:px-4 h-full'>
                 {/* Logo */}
-                <Image src={"/Frame 7.png"} alt='logo' className='sm:w-28 w-30'  width={150} height={150}/>
+                <Image src={"/Frame 7.png"} alt='logo' className='sm:w-28 w-24'  width={150} height={150}/>
 
                 {/* Links */}
                 <div className='space-x-12 hidden sm:block'>
