@@ -424,7 +424,7 @@ const DonationPage = () => {
 
             {/* Bank Account Details */}
             <div className="bg-gray-50 border rounded-xl p-5 w-full sm:w-3/4 text-gray-700 text-sm leading-relaxed">
-              <p><strong>Bank Name:</strong> SBI Bank (New Delhi)</p>
+              <p><strong>Bank Name:</strong> HDFC</p>
               <p><strong>Account Number:</strong> 50200097861826</p>
               <p><strong>Account Holder:</strong> MADHAVAM FOUNDATION</p>
               <p><strong>IFSC Code:</strong> HDFC0000942</p>

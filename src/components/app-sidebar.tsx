@@ -24,6 +24,11 @@ const items = [
         url: "/admin/manageBlog",
         icon: HiOutlineDocumentText,
     },
+    {
+        title: "All Payments",
+        url: "/admin/payments",
+        icon: HiOutlineDocumentText,
+    },
 ]
 
 export function AppSidebar() {

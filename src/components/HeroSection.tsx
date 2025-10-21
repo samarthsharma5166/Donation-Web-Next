@@ -7,14 +7,18 @@ import Link from "next/link";
 const heroSectionContent = [
     {
         id: 0,
-        image: "bg-[url(/slide1.png)]",
-        heading: "Lighting the Path to a Brighter Tomorrow",
-        subheading: "Empowering underserved communities through education, healthcare, and hope",
-        hindiHeading:"एक उज्जवल भविष्य की राह को रोशन करना",
-        hindiSubheading:"शिक्षा, स्वास्थ्य और आशा के माध्यम से वंचित समुदायों को सशक्त बनाना"
+        image: "bg-[url(/slide3.jpeg)]",
     },
     {
         id: 1,
+        image: "bg-[url(/slide1.png)]",
+        heading: "Lighting the Path to a Brighter Tomorrow",
+        subheading: "Empowering underserved communities through education, healthcare, and hope",
+        hindiHeading: "एक उज्जवल भविष्य की राह को रोशन करना",
+        hindiSubheading: "शिक्षा, स्वास्थ्य और आशा के माध्यम से वंचित समुदायों को सशक्त बनाना"
+    },
+    {
+        id: 2,
         image: "bg-[url(/slide2.jpg)]",
         heading: "To be the most trustworthy international leading",
         subheading: "Empowering underserved communities through education, healthcare, and hope",

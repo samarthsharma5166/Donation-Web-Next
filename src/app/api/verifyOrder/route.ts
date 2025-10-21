@@ -28,47 +28,183 @@ interface DonationDetails {
   date: Date;
 }
 
-async function generateInvoice(details: DonationDetails) {
+
+export async function generateInvoice(details: DonationDetails) {
   const { donorName, donorEmail, amount, paymentId, date } = details;
 
   const pdfDoc = await PDFDocument.create();
-  const page = pdfDoc.addPage([595, 842]); // A4 size
-
+  const page = pdfDoc.addPage([595, 842]); // A4 page
   const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-  const { height } = page.getSize();
+  const boldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+  const { height, width } = page.getSize();
 
-  let y = height - 80;
-  const drawText = (text: string, size = 14, moveY = 20) => {
-    page.drawText(text, { x: 50, y, size, font, color: rgb(0, 0, 0) });
-    y -= moveY;
-  };
+  // === 🟦 Header Section ===
+  page.drawRectangle({
+    x: 0,
+    y: height - 100,
+    width,
+    height: 100,
+    color: rgb(0.13, 0.32, 0.68), // Deep blue header
+  });
 
-  drawText("Donation Invoice", 22, 40);
-  drawText(`Invoice ID: ${paymentId}`);
-  drawText(`Date: ${new Date(date).toLocaleDateString()}`);
-  drawText("");
-  drawText("Donor Details", 16, 25);
-  drawText(`Name: ${donorName}`);
-  drawText(`Email: ${donorEmail}`);
-  drawText("");
-  drawText("Donation Details", 16, 25);
-  drawText(`Amount Donated: Rs.${amount}`);
-  drawText(`Payment ID: ${paymentId}`);
-  drawText("");
-  drawText("Thank you for your generous contribution!", 14, 25);
+  page.drawText("MADHAVAM FOUNDATION", {
+    x: 50,
+    y: height - 60,
+    size: 22,
+    font: boldFont,
+    color: rgb(1, 1, 1),
+  });
 
+  page.drawText("Registered NGO - Spreading Compassion & Service", {
+    x: 50,
+    y: height - 80,
+    size: 12,
+    font,
+    color: rgb(1, 1, 1),
+  });
+
+  // === 🧾 Invoice Title Section ===
+  let y = height - 140;
+  page.drawText("Donation Invoice", {
+    x: 50,
+    y,
+    size: 20,
+    font: boldFont,
+    color: rgb(0, 0, 0),
+  });
+
+  y -= 30;
+  page.drawText(`Invoice ID: ${paymentId}`, { x: 50, y, size: 12, font });
+  page.drawText(`Date: ${new Date(date).toLocaleDateString()}`, {
+    x: 400,
+    y,
+    size: 12,
+    font,
+  });
+
+  // === 👤 Donor Details Box ===
+  y -= 50;
+  page.drawRectangle({
+    x: 45,
+    y: y - 70,
+    width: width - 90,
+    height: 70,
+    color: rgb(0.95, 0.96, 0.98),
+  });
+
+  page.drawText("Donor Details", {
+    x: 50,
+    y: y - 15,
+    size: 14,
+    font: boldFont,
+    color: rgb(0.1, 0.1, 0.1),
+  });
+
+  page.drawText(`Name: ${donorName}`, {
+    x: 60,
+    y: y - 35,
+    size: 12,
+    font,
+  });
+  page.drawText(`Email: ${donorEmail}`, {
+    x: 60,
+    y: y - 55,
+    size: 12,
+    font,
+  });
+
+  // === 💸 Donation Details Box ===
+  y -= 110;
+  page.drawRectangle({
+    x: 45,
+    y: y - 80,
+    width: width - 90,
+    height: 80,
+    color: rgb(0.95, 0.96, 0.98),
+  });
+
+  page.drawText("Donation Details", {
+    x: 50,
+    y: y - 15,
+    size: 14,
+    font: boldFont,
+  });
+
+  page.drawText(`Payment ID: ${paymentId}`, {
+    x: 60,
+    y: y - 35,
+    size: 12,
+    font,
+  });
+
+  // Highlight the donation amount
+  page.drawText(`Amount Donated: RS.${amount.toLocaleString("en-IN")}`, {
+    x: 60,
+    y: y - 55,
+    size: 13,
+    font: boldFont,
+    color: rgb(0, 0.45, 0.15),
+  });
+
+  // === ❤️ Thank You Section ===
+  y -= 130;
+  page.drawText("Thank You!", {
+    x: 50,
+    y,
+    size: 18,
+    font: boldFont,
+    color: rgb(0.1, 0.4, 0.7),
+  });
+
+  y -= 25;
+  page.drawText(
+    "Your contribution helps Madhavam Foundation serve communities with love and dedication.",
+    { x: 50, y, size: 12, font, color: rgb(0, 0, 0) }
+  );
+
+  y -= 50;
+  page.drawText("Warm regards,", {
+    x: 50,
+    y,
+    size: 12,
+    font,
+  });
+  y -= 20;
+  page.drawText("Team Madhavam Foundation", {
+    x: 50,
+    y,
+    size: 12,
+    font: boldFont,
+    color: rgb(0.1, 0.4, 0.7),
+  });
+
+  // === 🧾 Footer Line ===
+  page.drawLine({
+    start: { x: 45, y: 60 },
+    end: { x: width - 45, y: 60 },
+    thickness: 1,
+    color: rgb(0.8, 0.8, 0.8),
+  });
+
+  page.drawText("https://www.madhavamfoundation.com | info@madhavamfoundation.org", {
+    x: 50,
+    y: 40,
+    size: 10,
+    font,
+    color: rgb(0.4, 0.4, 0.4),
+  });
+
+  // === 💾 Save File ===
   const pdfBytes = await pdfDoc.save();
-
   const invoicesDir = path.join(process.cwd(), "public", "invoices");
-  if (!fs.existsSync(invoicesDir)) {
-    fs.mkdirSync(invoicesDir, { recursive: true });
-  }
+  if (!fs.existsSync(invoicesDir)) fs.mkdirSync(invoicesDir, { recursive: true });
 
   const filePath = path.join(invoicesDir, `${paymentId}.pdf`);
   fs.writeFileSync(filePath, pdfBytes);
 
   return `${paymentId}.pdf`;
 }
+
 
 
 export async function POST(request:NextRequest){
