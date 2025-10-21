@@ -29,7 +29,7 @@ interface DonationDetails {
 }
 
 
-export async function generateInvoice(details: DonationDetails) {
+async function generateInvoice(details: DonationDetails) {
   const { donorName, donorEmail, amount, paymentId, date } = details;
 
   const pdfDoc = await PDFDocument.create();
