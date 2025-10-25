@@ -28,6 +28,8 @@ interface DonationFormData {
   dob: string;
   comments?: string;
   amount: number;
+  aadharNo: string;
+  panNo: string;
 }
 
 export interface SubscriptionFormData extends DonationFormData {
@@ -79,7 +81,6 @@ const DonationPage = () => {
     const planId = res.data.plan.id;
     const subscriptionres = await axios.post(`${baseUrl}/api/createSubscription`, { ...data, planId });
     const { subscriptionId, paymentId } = subscriptionres.data;
-    console.log("subscription:",subscriptionres);
 
     const options = {
       key: process.env.NEXT_PUBLIC_KEY_ID,
@@ -294,6 +295,14 @@ const DonationPage = () => {
                     <Field>
                       <FieldLabel>Donation Amount (₹)</FieldLabel>
                       <Input type="number" {...register("amount", { required: true })} placeholder="Enter amount" />
+                    </Field>
+                    <Field>
+                      <FieldLabel>Pan Number</FieldLabel>
+                      <Input type="text" {...register("panNo", { required: true })} placeholder="Enter pancard number" />
+                    </Field>
+                    <Field>
+                      <FieldLabel>Aadhar Number</FieldLabel>
+                      <Input type="text" {...register("aadharNo", { required: true })} placeholder="Enter aadhar number" />
                     </Field>
 
                     {!isOneTime && (

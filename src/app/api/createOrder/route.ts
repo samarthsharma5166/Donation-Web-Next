@@ -8,7 +8,7 @@ const razorpay = new Razorpay({
 
 export async function POST(req:Request){
    try {
-     const {name,email,phone,address,country,state,pincode,dob,comments, amount} = await req.json();
+     const {name,email,phone,address,country,state,pincode,dob,comments, amount,panNo,aadharNo} = await req.json();
 
     // if(!name || !email || !phone || !address || !country || !state || !pincode || !dob || !amount){
     //   return NextResponse.json({message:"All fields are required"}, {status:400});
@@ -43,6 +43,8 @@ export async function POST(req:Request){
         address ,
         country, 
         state ,  
+        panNo,
+        aadharNo,
         pincode ,
         dob:new Date(dob),   
         comments ,

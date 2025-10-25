@@ -21,6 +21,8 @@ export async function POST(req: Request) {
         state ,  
         pincode ,
         dob,  
+        panNo,
+        aadharNo,
         total_count ,
         comments ,
         amount } = await req.json();
@@ -49,6 +51,8 @@ export async function POST(req: Request) {
         address ,
         country, 
         state ,  
+        panNo,
+        aadharNo,
         pincode ,
         dob:new Date(dob),   
         comments ,
