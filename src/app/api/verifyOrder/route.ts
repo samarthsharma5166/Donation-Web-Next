@@ -5,6 +5,7 @@ import Razorpay from 'razorpay';
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import fs from "fs";
 import path from "path";
+import nodemailer from 'nodemailer';
 const generatedSignature = (razorpayOrderId:string,razorpayPaymentId:string)=>{
     const keySecret = process.env.NEXT_PUBLIC_KEY_SECRET as string;
     const sig = crypto.createHmac("sha256",keySecret)
@@ -12,6 +13,14 @@ const generatedSignature = (razorpayOrderId:string,razorpayPaymentId:string)=>{
                       .digest("hex");
     return sig;
 }
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.NEXT_PUBLIC_API_EMAIL_USER, // your Gmail or domain email
+    pass: process.env.NEXT_PUBLIC_EMAIL_PASS, // app password or SMTP password
+  },
+});
 
 const razorpay = new Razorpay({
   key_id: process.env.NEXT_PUBLIC_KEY_ID!,
@@ -238,6 +247,7 @@ export async function POST(request:NextRequest){
                 id:paymentId
             },
             data:{
+                
                 razorPayPaymentId:razorpay_payment_id,
                 razorpaySignature:razorpaySignature,
                 paymentStatus:"success"
@@ -261,6 +271,51 @@ export async function POST(request:NextRequest){
                 invoice:invoice
             }
         })
+
+        const invoiceUrl = `https://www.madhavamfoundation.com/invoices/${invoice}`;
+        const adminEmail = "madhavamfoundation99@gmail.com";
+
+        const mailOptionsUser = {
+          from: `"Madhavam Foundation" <${process.env.NEXT_PUBLIC_API_EMAIL_USER}>`,
+          to: payment.email, // donor email
+          subject: "Your Donation Receipt - Madhavam Foundation",
+          html: `
+            <div style="font-family:Arial, sans-serif; color:#333;">
+              <h2>Dear ${payment?.name || "Donor"},</h2>
+              <p>Thank you for your generous contribution of <b>₹${payment.amount.toLocaleString("en-IN")}</b>.</p>
+              <p>You can download your donation receipt (80G certificate) from the link below:</p>
+              <p><a href="${invoiceUrl}" target="_blank" style="color:#FF7A02;">Download Invoice</a></p>
+              <p>We sincerely appreciate your support towards spreading compassion and service.</p>
+              <br/>
+              <p>Warm regards,<br/><b>Madhavam Foundation</b></p>
+            </div>
+          `,
+        };
+
+        const mailOptionsAdmin = {
+          from: `"Madhavam Foundation" <${process.env.NEXT_PUBLIC_API_EMAIL_USER}>`,
+          to: adminEmail,
+          subject: `New Donation Received - ₹${payment.amount.toLocaleString("en-IN")}`,
+          html: `
+            <div style="font-family:Arial, sans-serif; color:#333;">
+              <h2>New Donation Received</h2>
+              <p><b>Name:</b> ${payment?.name}</p>
+              <p><b>Email:</b> ${payment?.email}</p>
+              <p><b>Amount:</b> ₹${payment.amount.toLocaleString("en-IN")}</p>
+              <p><b>Payment ID:</b> ${razorpay_payment_id}</p>
+              <p><b>Date:</b> ${new Date().toLocaleString("en-IN")}</p>
+              <p><a href="${invoiceUrl}" target="_blank" style="color:#FF7A02;">View Invoice</a></p>
+            </div>
+          `,
+        };
+
+        try {
+          await transporter.sendMail(mailOptionsUser);
+          await transporter.sendMail(mailOptionsAdmin);
+          console.log("Emails sent successfully to admin and donor");
+        } catch (error) {
+          console.error("Email send error:", error);
+        }
         return NextResponse.json({
             message:"Payment verified successfully",
             invoice,
