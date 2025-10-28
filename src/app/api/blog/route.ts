@@ -4,7 +4,10 @@ import fs from "fs";
 import { prisma } from "@/db/db";
 import jwt from "jsonwebtoken";
 
-const UPLOAD_DIR = path.resolve(process.env.ROOT_PATH ?? "", "public/uploads");
+// const UPLOAD_DIR = path.resolve(process.env.ROOT_PATH ?? "", "public/uploads");
+const UPLOAD_DIR = path.resolve(process.env.ROOT_PATH ?? "", "/var/www/blogs");
+
+
 
 // allowed types and max file size (e.g. 5 MB)
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/jpg", "image/webp"];
