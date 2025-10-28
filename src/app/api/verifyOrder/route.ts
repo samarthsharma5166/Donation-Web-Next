@@ -220,7 +220,7 @@ page.drawRectangle({
 
   // === SAVE ===
   const pdfBytes = await pdfDoc.save();
-  const invoicesDir = path.join(process.cwd(), "public", "invoices");
+  const invoicesDir = "/var/www/invoice";
   if (!fs.existsSync(invoicesDir)) fs.mkdirSync(invoicesDir, { recursive: true });
   const filePath = path.join(invoicesDir, `${paymentId}.pdf`);
   fs.writeFileSync(filePath, pdfBytes);
@@ -275,39 +275,56 @@ export async function POST(request:NextRequest){
         const invoiceUrl = `https://www.madhavamfoundation.com/invoices/${invoice}`;
         const adminEmail = "madhavamfoundation99@gmail.com";
 
+        const filePath = path.join("/var/www/invoice", invoice); // invoice = `${paymentId}.pdf`
+
         const mailOptionsUser = {
           from: `"Madhavam Foundation" <${process.env.NEXT_PUBLIC_API_EMAIL_USER}>`,
-          to: payment.email, // donor email
+          to: payment.email,
           subject: "Your Donation Receipt - Madhavam Foundation",
           html: `
             <div style="font-family:Arial, sans-serif; color:#333;">
               <h2>Dear ${payment?.name || "Donor"},</h2>
               <p>Thank you for your generous contribution of <b>₹${payment.amount.toLocaleString("en-IN")}</b>.</p>
-              <p>You can download your donation receipt (80G certificate) from the link below:</p>
-              <p><a href="${invoiceUrl}" target="_blank" style="color:#FF7A02;">Download Invoice</a></p>
-              <p>We sincerely appreciate your support towards spreading compassion and service.</p>
+              <p>Please find attached your donation receipt (80G certificate) for your records.</p>
               <br/>
               <p>Warm regards,<br/><b>Madhavam Foundation</b></p>
             </div>
           `,
+          attachments: [
+            {
+              filename: `${invoice}`, // e.g., "pay_Fm123.pdf"
+              path: filePath,
+              contentType: "application/pdf",
+            },
+          ],
         };
 
-        const mailOptionsAdmin = {
-          from: `"Madhavam Foundation" <${process.env.NEXT_PUBLIC_API_EMAIL_USER}>`,
-          to: adminEmail,
-          subject: `New Donation Received - ₹${payment.amount.toLocaleString("en-IN")}`,
-          html: `
-            <div style="font-family:Arial, sans-serif; color:#333;">
-              <h2>New Donation Received</h2>
-              <p><b>Name:</b> ${payment?.name}</p>
-              <p><b>Email:</b> ${payment?.email}</p>
-              <p><b>Amount:</b> ₹${payment.amount.toLocaleString("en-IN")}</p>
-              <p><b>Payment ID:</b> ${razorpay_payment_id}</p>
-              <p><b>Date:</b> ${new Date().toLocaleString("en-IN")}</p>
-              <p><a href="${invoiceUrl}" target="_blank" style="color:#FF7A02;">View Invoice</a></p>
-            </div>
-          `,
-        };
+
+      const mailOptionsAdmin = {
+        from: `"Madhavam Foundation" <${process.env.NEXT_PUBLIC_API_EMAIL_USER}>`,
+        to: adminEmail,
+        subject: `New Donation Received - ₹${payment.amount.toLocaleString("en-IN")}`,
+        html: `
+          <div style="font-family:Arial, sans-serif; color:#333;">
+            <h2>New Donation Received</h2>
+            <p><b>Name:</b> ${payment?.name}</p>
+            <p><b>Email:</b> ${payment?.email}</p>
+            <p><b>Amount:</b> ₹${payment.amount.toLocaleString("en-IN")}</p>
+            <p><b>Payment ID:</b> ${razorpay_payment_id}</p>
+            <p><b>Date:</b> ${new Date().toLocaleString("en-IN")}</p>
+            <p><a href="${invoiceUrl}" target="_blank" style="color:#FF7A02;">View Invoice Online</a></p>
+            <br/>
+            <p>The invoice PDF is attached for your internal record.</p>
+          </div>
+        `,
+        attachments: [
+            {
+              filename: `${invoice}`, // e.g., "pay_Fm123.pdf"
+              path: filePath,
+              contentType: "application/pdf",
+            },
+          ],
+      };
 
         try {
           await transporter.sendMail(mailOptionsUser);

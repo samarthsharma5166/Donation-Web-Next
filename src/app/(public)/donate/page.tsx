@@ -114,15 +114,26 @@ const DonationPage = () => {
   };
 
 
-  const downloadInvoice = (fileName: string) => {
-    const fileUrl = `/invoices/${fileName}`; // served from /public
-    const link = document.createElement("a");
-    link.href = fileUrl;
-    link.setAttribute("download", fileName);
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
+  const downloadInvoice = async (fileName: string) => {
+    try {
+      const response = await fetch(`/api/downloadInvoice/${fileName}`);
+      if (!response.ok) throw new Error("Failed to download invoice");
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", fileName);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error(err);
+      toast.error("Unable to download invoice");
+    }
   };
+
   const onSubmit = (data: DonationFormData | SubscriptionFormData) => {
     if (isOneTime) createOrder(data as DonationFormData);
     else createSubscription(data as SubscriptionFormData);
