@@ -23,7 +23,7 @@ export default async function BlogPage({ params }: PageProps) {
             <MdKeyboardArrowLeft /> Back
           </Link>
           <img
-            src={`${process.env.NEXT_PUBLIC_BASE_URL}/blogs/${res.data.data.coverImage}`}
+            src={`${process.env.NEXT_PUBLIC_BASE_URL}/images/${res.data.data.coverImage}`}
             className="object-cover w-full h-64 bg-center rounded-lg"
             alt="cover"
           />

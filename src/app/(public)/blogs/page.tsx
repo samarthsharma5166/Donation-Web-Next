@@ -67,7 +67,7 @@ const page = () => {
                               <ThreeDCardDemo
                                   key={blog.id}
                                   id={blog.id}  
-                                  src={`${process.env.NEXT_PUBLIC_BASE_URL}/blogs/${blog.coverImage}`}
+                                  src={`${process.env.NEXT_PUBLIC_BASE_URL}/images/${blog.coverImage}`}
                                   heading={blog.title}
                                   subHeading={blog.body}
                               />

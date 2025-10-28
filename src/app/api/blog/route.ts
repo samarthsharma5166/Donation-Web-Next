@@ -5,7 +5,7 @@ import { prisma } from "@/db/db";
 import jwt from "jsonwebtoken";
 
 // const UPLOAD_DIR = path.resolve(process.env.ROOT_PATH ?? "", "public/uploads");
-const UPLOAD_DIR = path.resolve(process.env.ROOT_PATH ?? "", "/var/www/blogs");
+const UPLOAD_DIR = path.resolve(process.env.ROOT_PATH ?? "", "/var/www/images");
 
 
 
