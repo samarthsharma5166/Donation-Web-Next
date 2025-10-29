@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
     // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
+    images: {
+    domains: ['www.madhavamfoundation.com'],
+  }
 };
 
 export default nextConfig;

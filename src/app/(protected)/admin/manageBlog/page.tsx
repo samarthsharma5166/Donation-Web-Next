@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/pagination"
 import { ThreeDCardDemo } from '@/components/ThreeDCardDemo'
 import { Loader2 } from "lucide-react"
+import { baseUrl } from '@/helper/constant'
 
 interface FormData {
   title: string;
@@ -114,7 +115,7 @@ const Page = () => {
             >
               <ThreeDCardDemo
                 id={blog.id}
-                src={`/uploads/${blog.coverImage}`}
+                src={`${baseUrl}/images/${blog.coverImage}`}
                 heading={blog.title}
                 subHeading={blog.body}
               />
