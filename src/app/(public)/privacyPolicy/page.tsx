@@ -23,7 +23,7 @@ const PrivacyPolicyPage = async ({ searchParams }: { searchParams: SearchParams 
                                     <strong>प्रभावी तिथि:</strong> 11 अक्टूबर 2025
                                 </p>
                                 <p className="text-gray-600 leading-relaxed">
-                                    <strong>माधवम फाउंडेशन</strong> (“हम”, “हमारा”, “हमसे”) में आपका स्वागत है।
+                                    <strong>माधवम् फाउंडेशन</strong> (“हम”, “हमारा”, “हमसे”) में आपका स्वागत है।
                                     हम आपकी व्यक्तिगत जानकारी और गोपनीयता की सुरक्षा के लिए प्रतिबद्ध हैं।
                                     यह गोपनीयता नीति बताती है कि हम आपकी जानकारी को कैसे एकत्रित, उपयोग, साझा और सुरक्षित रखते हैं
                                     जब आप हमारी वेबसाइट (<a href="https://www.madhavamfoundation.com" className="text-blue-600 hover:underline">

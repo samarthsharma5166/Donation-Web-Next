@@ -146,11 +146,12 @@ page.drawRectangle({
     y -= 20 + offset;
   };
 
-  textBlock("Receipt No.:", paymentId);
+  y -= 20;
+  textBlock("Receipt No:", paymentId);
   textBlock("Date:", new Date(date).toLocaleDateString("en-IN"));
   textBlock("Donor Name:", donorName);
   textBlock("Address:", donorAddress);
-  textBlock("PAN No.:", donorPAN);
+  textBlock("PAN No:", donorPAN);
   textBlock("Email:", donorEmail);
   textBlock("Amount Donated:", `Rs. ${amount.toLocaleString("en-IN")} (${numberToWords(amount)})`);
   textBlock("Payment Mode:", "Digital");
@@ -214,7 +215,7 @@ page.drawRectangle({
     x: 50, y, size: 10, font, color: rgb(0.1, 0.3, 0.7),
   });
   y -= 15;
-  page.drawText("Registered Office: 123 Compassion Street, Sector-63, Noida, Uttar Pradesh - 201301", {
+  page.drawText("Shree Vidhya Peeth, Sanskrit Chatravvas, Shyam Kuti, Chetra Prikrima Marg Vridavan, Mathura UP ,281121", {
     x: 50, y, size: 10, font, color: rgb(0.3, 0.3, 0.3),
   });
 

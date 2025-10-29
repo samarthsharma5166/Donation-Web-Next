@@ -34,7 +34,7 @@ const TermsOfUsePage = async ({ searchParams }: { searchParams: SearchParams }) 
                         <p className="text-gray-600 leading-relaxed">
                             {isHindi ? (
                                 <>
-                                    <strong>माधवम फाउंडेशन</strong> (“हम”, “हमारा”, या “हमसे”) में आपका स्वागत है।
+                                    <strong>माधवम् फाउंडेशन</strong> (“हम”, “हमारा”, या “हमसे”) में आपका स्वागत है।
                                     हमारी वेबसाइट{" "}
                                     <a
                                         href="https://www.madhavamfoundation.com"

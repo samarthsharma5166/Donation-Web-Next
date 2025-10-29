@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/pagination"
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { baseUrl } from '@/helper/constant';
 
 const page = () => {
       const [modelOpen, setModalOpen] = useState(false);
@@ -67,7 +68,7 @@ const page = () => {
                               <ThreeDCardDemo
                                   key={blog.id}
                                   id={blog.id}  
-                                  src={`${process.env.NEXT_PUBLIC_BASE_URL}/images/${blog.coverImage}`}
+                                  src={`${baseUrl}/images/${blog.coverImage}`}
                                   heading={blog.title}
                                   subHeading={blog.body}
                               />

@@ -4,9 +4,9 @@ import SectionHeader from "@/components/SectionHeader";
 import React from "react";
 
 export const metadata = {
-  title: "About Us | Madhav Foundation",
+  title: "About Us | Madhavam Foundation",
   description:
-    "Madhav Foundation is dedicated to uplifting humanity through education, healthcare, cultural preservation, and selfless service.",
+    "Madhavam Foundation is dedicated to uplifting humanity through education, healthcare, cultural preservation, and selfless service.",
 };
 
 type SearchParams = Promise<{ lang?: string }>;
@@ -35,10 +35,10 @@ const AboutPage = async ({ searchParams }: { searchParams: SearchParams }) => {
               <>
                 <p>
                   करुणा, सेवा और शिक्षा के माध्यम से मानवता को उठाने की दृष्टि
-                  से स्थापित <strong>माधव फाउंडेशन</strong> सामाजिक कल्याण और
+                  से स्थापित <strong>माधवम् फाउंडेशन</strong> सामाजिक कल्याण और
                   सांस्कृतिक संरक्षण का प्रतीक है। यह ट्रस्ट{" "}
                   <strong>
-                    श्री सुरेश कुमार शर्मा (आचार्य माधवानंद)
+                    श्री सूरज कुमार शर्मा (आचार्य माधवानंद जी महाराज)
                   </strong>{" "}
                   द्वारा <strong>9 जनवरी 2024</strong> को स्थापित किया गया। यह
                   संस्थान संतों की शिक्षाओं से प्रेरित होकर सदाचार, निःस्वार्थ
@@ -113,7 +113,7 @@ const AboutPage = async ({ searchParams }: { searchParams: SearchParams }) => {
                   हमारी प्रतिबद्धता
                 </h2>
                 <p>
-                  माधव फाउंडेशन का प्रत्येक कार्य <em>निष्काम सेवा</em> की भावना
+                  माधवम् फाउंडेशन का प्रत्येक कार्य <em>निष्काम सेवा</em> की भावना
                   से प्रेरित है। हम समाज में ईमानदारी, करुणा और सेवा की भावना को
                   बढ़ावा देने के लिए समर्पित हैं। हमारा उद्देश्य एक ऐसे भारत का
                   निर्माण करना है जहाँ शिक्षा प्रकाश फैलाए, सेवा उत्थान करे और
@@ -124,10 +124,10 @@ const AboutPage = async ({ searchParams }: { searchParams: SearchParams }) => {
               <>
                 <p>
                   Founded with a vision to uplift humanity through compassion,
-                  service, and education, <strong>Madhav Foundation</strong>{" "}
+                  service, and education, <strong>Madhavam Foundation</strong>{" "}
                   stands as a beacon of hope for social welfare and cultural
                   preservation. Established by{" "}
-                  <strong>Shri Suresh Kumar Sharma (Acharya Madhavanand)</strong>{" "}
+                  <strong>Shri Suraj Kumar Sharma (Acharya Madhavanand Ji Maharaj)</strong>{" "}
                   on <strong>9th January 2024</strong>, the foundation is deeply
                   inspired by the teachings of revered saints and aims to
                   promote a life of virtue, selfless service, and moral strength.
@@ -136,7 +136,7 @@ const AboutPage = async ({ searchParams }: { searchParams: SearchParams }) => {
                 <p>
                   Our journey began with a simple belief — that serving humanity
                   is the truest form of worship. Guided by this principle,
-                  Madhav Foundation works towards building a society rooted in
+                  Madhavam Foundation works towards building a society rooted in
                   compassion, education, and cultural values. From supporting
                   students and uplifting the underprivileged to preserving
                   India’s spiritual and cultural heritage, our mission is to
@@ -204,7 +204,7 @@ const AboutPage = async ({ searchParams }: { searchParams: SearchParams }) => {
                   Our Commitment
                 </h2>
                 <p>
-                  At Madhav Foundation, every initiative reflects our dedication
+                  At Madhavam Foundation, every initiative reflects our dedication
                   to selfless service (<em>Nishkaam Seva</em>). We aim to inspire
                   individuals to lead lives of integrity, compassion, and
                   devotion to the greater good of society. Together, we strive

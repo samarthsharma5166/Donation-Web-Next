@@ -2,9 +2,9 @@ import React from 'react'
 import SectionHeader from './SectionHeader'
 import { ThreeDCardDemo } from './ThreeDCardDemo'
 import axios from 'axios'
+import { baseUrl } from '@/helper/constant'
 
 const BlogsSection = async() => {
-  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
   const blogs = await axios.get(`${baseUrl}/api/blog?page=${1}&limit=${6}`);
   return (
     <div className='py-8'>
