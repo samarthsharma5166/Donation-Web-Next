@@ -21,9 +21,11 @@ const Footer = ({ searchParams }: FooterProps ) => {
                     <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold max-w-2xl leading-snug">
                         Join your hand with us for a better life and beautiful future.
                     </h2>
-                    <Button className="mt-6 md:mt-0 bg-[#b08c61] hover:bg-[#9c7c55] text-white rounded-lg px-6 py-3">
-                        Donate Now
-                    </Button>
+                    <Link  href="/donate">
+                        <Button className="mt-6 md:mt-0 bg-[#b08c61] hover:bg-[#9c7c55] text-white rounded-lg px-6 py-3">
+                            Donate Now
+                        </Button>
+                    </Link>
                 </div>
             </div>
 

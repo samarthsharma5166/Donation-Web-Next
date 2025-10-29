@@ -68,7 +68,7 @@ const page = () => {
                               <ThreeDCardDemo
                                   key={blog.id}
                                   id={blog.id}  
-                                  src={`${baseUrl}/images/${blog.coverImage}`}
+                                  src={`https://www.madhavamfoundation.com/images/${blog.coverImage}`}
                                   heading={blog.title}
                                   subHeading={blog.body}
                               />
