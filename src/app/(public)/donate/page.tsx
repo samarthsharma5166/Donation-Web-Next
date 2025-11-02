@@ -300,10 +300,37 @@ const DonationPage = () => {
                       <FieldLabel>Comments</FieldLabel>
                       <Textarea {...register("comments")} placeholder="Any special message?" className="resize-none" />
                     </Field>
-                    <Field>
+                    {/* <Field>
                       <FieldLabel>Donation Amount (₹)</FieldLabel>
                       <Input type="number" {...register("amount", { required: true })} placeholder="Enter amount" />
+                    </Field> */}
+                    <Field>
+                      <FieldLabel>Donation Amount (₹)</FieldLabel>
+
+                      {/* Predefined Amount Buttons */}
+                      <div className="flex gap-3 mb-3">
+                        {[500, 1000, 2000, 5000].map((amt) => (
+                          <Button
+                            key={amt}
+                            type="button"
+                            variant="outline"
+                            className="rounded-full border-gray-300 text-gray-700 hover:bg-[#8B7E6C] hover:text-white transition-all"
+                            onClick={() => setValue("amount", amt)}
+                          >
+                            ₹{amt}
+                          </Button>
+                        ))}
+                      </div>
+
+                      {/* Custom Amount Input */}
+                      <Input
+                        type="number"
+                        {...register("amount", { required: true })}
+                        placeholder="Or enter a custom amount"
+                        className="w-full"
+                      />
                     </Field>
+
                     <Field>
                       <FieldLabel>Pan Number</FieldLabel>
                       <Input type="text" {...register("panNo", { required: true })} placeholder="Enter pancard number" />
