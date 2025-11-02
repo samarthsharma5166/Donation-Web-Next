@@ -61,10 +61,8 @@ const DonationPage = () => {
           body: JSON.stringify({ paymentId: paymentId, razorpay_order_id: response.razorpay_order_id, razorpay_payment_id: response.razorpay_payment_id, razorpaySignature: response.razorpay_signature, }),
         });
         const verifyData = await verifyRes.json();
-        console.log(verifyData);
         if (verifyData.success){ 
           toast.success("Payment verified successfully")
-          console.log(verifyData);
           setPaymentSuccess(verifyData.invoice);
           // window.open(verifyData.invoice.short_url, "_blank");
         };
@@ -77,7 +75,6 @@ const DonationPage = () => {
   const createSubscription = async (data: SubscriptionFormData) => {
     setLoading(true);
     const res = await axios.post(`${baseUrl}/api/createPlan`, data);
-    console.log("subscription",res);
     const planId = res.data.plan.id;
     const subscriptionres = await axios.post(`${baseUrl}/api/createSubscription`, { ...data, planId });
     const { subscriptionId, paymentId } = subscriptionres.data;

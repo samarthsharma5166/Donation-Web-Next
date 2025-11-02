@@ -15,7 +15,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({success:false, message: 'User not found' });
     }
     const hashPass = await bcrypt.compare(body.password,user.password);
-    console.log(hashPass,user.password);
     if(!hashPass){
       return NextResponse.json({success:false, message: 'Incorrect password' });
     }
@@ -33,7 +32,6 @@ export async function POST(req: NextRequest) {
     });
     return res;
   } catch (error) {
-    console.log(error)
     return NextResponse.json({
             success:false,
             message:"something went wrong"

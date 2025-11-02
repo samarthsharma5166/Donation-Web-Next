@@ -1,11 +1,12 @@
-import { prisma } from '@/db/db';
-import crypto from 'crypto'
-import { NextRequest, NextResponse } from 'next/server';
-import Razorpay from 'razorpay';
-import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
-import fs from "fs";
+import { NextRequest, NextResponse } from "next/server";
+import crypto from "crypto";
+import { prisma } from "@/db/db";
+import Razorpay from "razorpay";
 import path from "path";
-import nodemailer from 'nodemailer';
+import fs from "fs";
+import nodemailer from "nodemailer";
+import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
+
 const generatedSignature = (razorpayOrderId:string,razorpayPaymentId:string)=>{
     const keySecret = process.env.NEXT_PUBLIC_KEY_SECRET as string;
     const sig = crypto.createHmac("sha256",keySecret)
@@ -21,13 +22,6 @@ const transporter = nodemailer.createTransport({
     pass: process.env.NEXT_PUBLIC_EMAIL_PASS, // app password or SMTP password
   },
 });
-
-const razorpay = new Razorpay({
-  key_id: process.env.NEXT_PUBLIC_KEY_ID!,
-  key_secret: process.env.NEXT_PUBLIC_KEY_SECRET!,
-});
-
-
 
 function numberToWords(num: number): string {
   const a = [
@@ -228,121 +222,101 @@ page.drawRectangle({
   return `${paymentId}.pdf`;
 }
 
+export async function POST(req: NextRequest) {
+  const rawBody = await req.text(); // Razorpay sends raw body, not JSON
+  const signature = req.headers.get("x-razorpay-signature");
+  const webhookSecret = process.env.NEXT_PUBLIC_RAZORPAY_WEBHOOK_SECRET as string;
 
-export async function POST(request:NextRequest){
-    const {razorpay_order_id, razorpay_payment_id, razorpaySignature ,paymentId} = await request.json();
+  // Verify signature
+  const expectedSignature = crypto
+    .createHmac("sha256", webhookSecret)
+    .update(rawBody)
+    .digest("hex");
 
-    if(!razorpay_order_id || !razorpay_payment_id || !razorpaySignature){
-        return NextResponse.json({message:"All fields are required"}, {status:400});
-    }
+  if (expectedSignature !== signature) {
+    return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
+  }
 
-    if(razorpay_order_id.length < 14 || razorpay_payment_id.length < 14 || razorpaySignature.length < 14){
-        return NextResponse.json({message:"Invalid data sent!"}, {status:400});
-    }
-    
-    // Generate signature
-    const sig = generatedSignature(razorpay_order_id, razorpay_payment_id);
-    if(sig === razorpaySignature){
-         const payment = await prisma.payments.update({
-            where:{
-                id:paymentId
-            },
-            data:{
-                
-                razorPayPaymentId:razorpay_payment_id,
-                razorpaySignature:razorpaySignature,
-                paymentStatus:"success"
-            }
-        })
-        const address = `${payment?.address}, ${payment?.state}, ${payment?.country}, ${payment?.pincode}`
-       const invoice = await generateInvoice({
-        donorName: payment?.name || "Anonymous Donor",
-        donorEmail: payment?.email || "N/A",
-        amount: payment.amount,
-        paymentId: razorpay_payment_id,
+  const event = JSON.parse(rawBody);
+  const { event: eventType, payload } = event;
+
+  // We only care about successful payments
+  if (eventType === "payment.captured") {
+    const payment = payload.payment.entity;
+
+    try {
+      const existing = await prisma.payments.findFirst({
+        where: { razorpayOrderId: payment.order_id },
+      });
+
+      if (!existing) return NextResponse.json({ ok: true });
+
+      // Skip if already marked success
+      if (existing.paymentStatus === "success") {
+        return NextResponse.json({ ok: true, msg: "Already processed" });
+      }
+
+      // Update DB
+      const updated = await prisma.payments.update({
+        where: { id: existing.id },
+        data: {
+          razorPayPaymentId: payment.id,
+          paymentStatus: "success",
+          razorpaySignature: signature,
+        },
+      });
+
+      const address = `${updated.address}, ${updated.state}, ${updated.country}, ${updated.pincode}`;
+      const invoice = await generateInvoice({
+        donorName: updated.name || "Anonymous Donor",
+        donorEmail: updated.email || "N/A",
+        amount: updated.amount,
+        paymentId: payment.id,
         date: new Date(),
-        donorPAN:payment?.panNo,
-        donorAddress:address
-        });
-        await prisma.payments.update({
-            where:{
-                id:paymentId
-            },
-            data:{
-                invoice:invoice
-            }
-        })
+        donorPAN: updated.panNo,
+        donorAddress: address,
+      });
 
-        const invoiceUrl = `https://www.madhavamfoundation.com/invoices/${invoice}`;
-        const adminEmail = "madhavamfoundation99@gmail.com";
+      await prisma.payments.update({
+        where: { id: updated.id },
+        data: { invoice },
+      });
 
-        const filePath = path.join("/var/www/invoice", invoice); // invoice = `${paymentId}.pdf`
+      // Send mail to donor & admin
+      const filePath = path.join("/var/www/invoice", invoice);
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.NEXT_PUBLIC_API_EMAIL_USER,
+          pass: process.env.NEXT_PUBLIC_EMAIL_PASS,
+        },
+      });
 
-        const mailOptionsUser = {
-          from: `"Madhavam Foundation" <${process.env.NEXT_PUBLIC_API_EMAIL_USER}>`,
-          to: payment.email,
-          subject: "Your Donation Receipt - Madhavam Foundation",
-          html: `
-            <div style="font-family:Arial, sans-serif; color:#333;">
-              <h2>Dear ${payment?.name || "Donor"},</h2>
-              <p>Thank you for your generous contribution of <b>₹${payment.amount.toLocaleString("en-IN")}</b>.</p>
-              <p>Please find attached your donation receipt (80G certificate) for your records.</p>
-              <br/>
-              <p>Warm regards,<br/><b>Madhavam Foundation</b></p>
-            </div>
-          `,
-          attachments: [
-            {
-              filename: `${invoice}`, // e.g., "pay_Fm123.pdf"
-              path: filePath,
-              contentType: "application/pdf",
-            },
-          ],
-        };
-
-
-      const mailOptionsAdmin = {
+      const mailUser = {
         from: `"Madhavam Foundation" <${process.env.NEXT_PUBLIC_API_EMAIL_USER}>`,
-        to: adminEmail,
-        subject: `New Donation Received - ₹${payment.amount.toLocaleString("en-IN")}`,
-        html: `
-          <div style="font-family:Arial, sans-serif; color:#333;">
-            <h2>New Donation Received</h2>
-            <p><b>Name:</b> ${payment?.name}</p>
-            <p><b>Email:</b> ${payment?.email}</p>
-            <p><b>Amount:</b> ₹${payment.amount.toLocaleString("en-IN")}</p>
-            <p><b>Payment ID:</b> ${razorpay_payment_id}</p>
-            <p><b>Date:</b> ${new Date().toLocaleString("en-IN")}</p>
-            <p><a href="${invoiceUrl}" target="_blank" style="color:#FF7A02;">View Invoice Online</a></p>
-            <br/>
-            <p>The invoice PDF is attached for your internal record.</p>
-          </div>
-        `,
-        attachments: [
-            {
-              filename: `${invoice}`, // e.g., "pay_Fm123.pdf"
-              path: filePath,
-              contentType: "application/pdf",
-            },
-          ],
+        to: updated.email,
+        subject: "Your Donation Receipt - Madhavam Foundation",
+        html: `<p>Dear ${updated.name}, thank you for your donation of ₹${updated.amount}. The receipt is attached.</p>`,
+        attachments: [{ filename: invoice, path: filePath }],
       };
 
-        try {
-          await transporter.sendMail(mailOptionsUser);
-          await transporter.sendMail(mailOptionsAdmin);
-        } catch (error) {
-          console.error("Email send error:", error);
-        }
-        return NextResponse.json({
-            message:"Payment verified successfully",
-            invoice,
-            success:true,
-        },{
-            status:200
-        });
-    }else{
-        return NextResponse.json({message:"Invalid signature sent!"}, {status:400});
-    }
+      const mailAdmin = {
+        from: `"Madhavam Foundation" <${process.env.NEXT_PUBLIC_API_EMAIL_USER}>`,
+        to: "madhavamfoundation99@gmail.com",
+        subject: `New Donation ₹${updated.amount}`,
+        html: `<p>Payment ID: ${payment.id}<br/>Donor: ${updated.name}</p>`,
+        attachments: [{ filename: invoice, path: filePath }],
+      };
 
-   
+      await transporter.sendMail(mailUser);
+      await transporter.sendMail(mailAdmin);
+
+      return NextResponse.json({ ok: true });
+    } catch (err) {
+      console.error("Webhook error:", err);
+      return NextResponse.json({ error: "Server error" }, { status: 500 });
+    }
+  }
+
+  return NextResponse.json({ ok: true });
 }

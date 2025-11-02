@@ -47,8 +47,6 @@ const page = () => {
       useEffect(() => {
         loadBlogs(1);
       }, [loadBlogs]);
-
-      console.log(blogs)
   return (
    <Suspense fallback={<div className="flex justify-center items-center h-screen"><Loader2 className="animate-spin text-gray-500 w-8 h-8" /></div>}>
           <Header />
