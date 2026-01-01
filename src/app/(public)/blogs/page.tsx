@@ -18,7 +18,12 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { baseUrl } from '@/helper/constant';
 
-const page = () => {
+type SearchParams = Promise<{ lang: string }>
+
+const page = async({ searchParams }: { searchParams: SearchParams }) => {
+
+  const { lang } = await searchParams
+  const data = lang === "hn" ? "hn" : "en"
       const [modelOpen, setModalOpen] = useState(false);
       const [loading, setLoading] = useState(false);
       const [blogs, setBlogs] = useState<any[]>([]);
@@ -54,7 +59,7 @@ const page = () => {
             <Button className='fixed z-40 left-4 bottom-4 bg-[#867156] hover:bg-[#8b7e6c] transition-transform duration-300 hover:-translate-y-1 hover:scale-110'>
                                                 <Link href={"/donate"}>Donate Now</Link>
                     </Button>
-              <SectionHeader heading="Latest Blogs" />
+              <SectionHeader heading={data === "hn" ? "नवीनतम ब्लॉग" : "Latest Blogs"} />
               <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 container px-4 mx-auto sm:px-0'>
                   {loading ? (
                       <div className="col-span-full flex justify-center items-center py-10">

@@ -24,7 +24,7 @@ export default async function Home({ searchParams }: { searchParams: SearchParam
       <HeroSection />
       <FeatureSection />
       <AimSection searchParams={searchParam} />
-      <BlogsSection />
+      <BlogsSection searchParams={searchParam} />
       <Footer searchParams={searchParam} />
     </>
   );

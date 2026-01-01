@@ -15,7 +15,7 @@ export function AppleCardsCarouselDemo() {
         <div className="w-full h-full py-8">
             <div className="relative">
                 <h2 className="text-center max-w-7xl pl-4 mx-auto text-xl md:text-4xl font-bold text-[#B09065] dark:text-neutral-200 font-sans">
-                    What We’re Doing
+                    {lang === 'hn' ? "हम क्या कर रहे हैं": "What We’re Doing"}
                 </h2>
                 <div className="mx-auto h-1 w-14 bg-[#B09065]" />
             </div>
