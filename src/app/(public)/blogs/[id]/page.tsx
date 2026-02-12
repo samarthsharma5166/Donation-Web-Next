@@ -1,3 +1,4 @@
+import { baseUrl } from "@/helper/constant";
 import axios from "axios";
 import Link from "next/link";
 import { MdKeyboardArrowLeft } from "react-icons/md";
@@ -9,7 +10,6 @@ type PageProps = {
 export default async function BlogPage({ params }: PageProps) {
   const { id } = await params; // ✅ no need to await
   // || process.env.BASE_URL
-  const baseUrl = "https://www.madhavamfoundation.com/" ;
   const res = await axios.get(`${baseUrl}/api/blog/${id}`);
 
   return (

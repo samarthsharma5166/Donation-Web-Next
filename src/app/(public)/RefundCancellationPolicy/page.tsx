@@ -1,6 +1,7 @@
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import SectionHeader from '@/components/SectionHeader';
+import { baseUrl } from '@/helper/constant';
 import { Loader2 } from 'lucide-react';
 import React from 'react';
 
@@ -26,7 +27,7 @@ const RefundCancellationPage = async ({ searchParams }: { searchParams: SearchPa
                                 <p className="text-gray-600 leading-relaxed">
                                     यह <strong>रिफंड और रद्दीकरण नीति</strong> सभी दान पर लागू होती है जो
                                     <strong> मधवम फाउंडेशन </strong> की आधिकारिक वेबसाइट
-                                    (<a href="https://www.madhavamfoundation.com" className="text-blue-600 hover:underline ml-1">
+                                    (<a href={baseUrl} className="text-blue-600 hover:underline ml-1">
                                         https://www.madhavamfoundation.com
                                     </a>)
                                     के माध्यम से किए जाते हैं।
@@ -113,7 +114,7 @@ const RefundCancellationPage = async ({ searchParams }: { searchParams: SearchPa
                                 <p className="text-gray-600 leading-relaxed">
                                     This <strong>Refund and Cancellation Policy</strong> applies to all donations made to
                                     <strong> Madhavam Foundation</strong> through our official website
-                                    (<a href="https://www.madhavamfoundation.com" className="text-blue-600 hover:underline ml-1">
+                                    (<a href={baseUrl} className="text-blue-600 hover:underline ml-1">
                                         https://www.madhavamfoundation.com
                                     </a>).
                                 </p>

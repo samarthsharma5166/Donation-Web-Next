@@ -2,6 +2,7 @@
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import SectionHeader from '@/components/SectionHeader'
+import { baseUrl } from '@/helper/constant'
 import { Loader2 } from 'lucide-react'
 import React from 'react'
 
@@ -37,7 +38,7 @@ const TermsOfUsePage = async ({ searchParams }: { searchParams: SearchParams }) 
                                     <strong>माधवम् फाउंडेशन</strong> (“हम”, “हमारा”, या “हमसे”) में आपका स्वागत है।
                                     हमारी वेबसाइट{" "}
                                     <a
-                                        href="https://www.madhavamfoundation.com"
+                                        href={baseUrl}
                                         className="text-blue-600 hover:underline"
                                     >
                                         https://www.madhavamfoundation.com
@@ -50,7 +51,7 @@ const TermsOfUsePage = async ({ searchParams }: { searchParams: SearchParams }) 
                                     Welcome to <strong>Madhavam Foundation</strong> (“we,” “our,” or “us”).
                                     By accessing or using our website{" "}
                                     <a
-                                        href="https://www.madhavamfoundation.com"
+                                        href={baseUrl}
                                         className="text-blue-600 hover:underline"
                                     >
                                         https://www.madhavamfoundation.com

@@ -1,6 +1,7 @@
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
 import SectionHeader from '@/components/SectionHeader'
+import { baseUrl } from '@/helper/constant'
 import React from 'react'
 
 // ✅ Server Component — SSR enabled
@@ -26,7 +27,7 @@ const PrivacyPolicyPage = async ({ searchParams }: { searchParams: SearchParams 
                                     <strong>माधवम् फाउंडेशन</strong> (“हम”, “हमारा”, “हमसे”) में आपका स्वागत है।
                                     हम आपकी व्यक्तिगत जानकारी और गोपनीयता की सुरक्षा के लिए प्रतिबद्ध हैं।
                                     यह गोपनीयता नीति बताती है कि हम आपकी जानकारी को कैसे एकत्रित, उपयोग, साझा और सुरक्षित रखते हैं
-                                    जब आप हमारी वेबसाइट (<a href="https://www.madhavamfoundation.com" className="text-blue-600 hover:underline">
+                                    जब आप हमारी वेबसाइट (<a href={baseUrl} className="text-blue-600 hover:underline">
                                         https://www.madhavamfoundation.com
                                     </a>) पर आते हैं।
                                 </p>
@@ -117,7 +118,7 @@ const PrivacyPolicyPage = async ({ searchParams }: { searchParams: SearchParams 
                                     Welcome to <strong>Madhavam Foundation</strong> ("we", "our", "us").
                                     We are committed to protecting your personal information and your right to privacy.
                                     This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website
-                                    (<a href="https://www.madhavamfoundation.com" className="text-blue-600 hover:underline">
+                                    (<a href={baseUrl} className="text-blue-600 hover:underline">
                                         https://www.madhavamfoundation.com
                                     </a>).
                                 </p>

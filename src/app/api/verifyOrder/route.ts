@@ -6,6 +6,7 @@ import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import fs from "fs";
 import path from "path";
 import nodemailer from 'nodemailer';
+import { baseUrl } from '@/helper/constant';
 const generatedSignature = (razorpayOrderId:string,razorpayPaymentId:string)=>{
     const keySecret = process.env.NEXT_PUBLIC_KEY_SECRET as string;
     const sig = crypto.createHmac("sha256",keySecret)
@@ -273,7 +274,7 @@ export async function POST(request:NextRequest){
             }
         })
 
-        const invoiceUrl = `https://www.madhavamfoundation.com/invoices/${invoice}`;
+        const invoiceUrl = `${baseUrl}/invoices/${invoice}`;
         const adminEmail = "madhavamfoundation99@gmail.com";
 
         const filePath = path.join("/var/www/invoice", invoice); // invoice = `${paymentId}.pdf`
