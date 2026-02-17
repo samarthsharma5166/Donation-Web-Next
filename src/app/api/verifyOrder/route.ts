@@ -223,6 +223,9 @@ page.drawRectangle({
   // === SAVE ===
   const pdfBytes = await pdfDoc.save();
   const invoicesDir = "/var/www/invoice";
+  // const invoicesDir = "/invoices";
+  // const invoicesDir = path.join(process.cwd(), "public", "invoices");
+
   if (!fs.existsSync(invoicesDir)) fs.mkdirSync(invoicesDir, { recursive: true });
   const filePath = path.join(invoicesDir, `${paymentId}.pdf`);
   fs.writeFileSync(filePath, pdfBytes);
@@ -278,6 +281,12 @@ export async function POST(request:NextRequest){
         const adminEmail = "madhavamfoundation99@gmail.com";
 
         const filePath = path.join("/var/www/invoice", invoice); // invoice = `${paymentId}.pdf`
+        // const filePath = path.join(
+        //   process.cwd(),
+        //   "public",
+        //   "invoices",
+        //   invoice,
+        // );
 
         const mailOptionsUser = {
           from: `"Madhavam Foundation" <${process.env.NEXT_PUBLIC_API_EMAIL_USER}>`,

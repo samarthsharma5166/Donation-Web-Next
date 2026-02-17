@@ -6,16 +6,17 @@ const razorpay = new Razorpay({
   key_secret: process.env.NEXT_PUBLIC_KEY_SECRET!,
 });
 
+
 export async function POST(req:Request){
    try {
      const {name,email,phone,address,country,state,pincode,dob,comments, amount,panNo,aadharNo} = await req.json();
 
-    // if(!name || !email || !phone || !address || !country || !state || !pincode || !dob || !amount){
+    // if(!name || !email || !phone || !address || !country || !state || !pincode || !dob || !amount || !panNo || !aadharNo){
     //   return NextResponse.json({message:"All fields are required"}, {status:400});
     // }
 
-    // if(amount < 1){
-    //   return NextResponse.json({message:"Amount must be greater than 0"}, {status:400});
+    // if(typeof amount !== 'number' || amount < 1){
+    //   return NextResponse.json({message:"Amount must be a number greater than 0"}, {status:400});
     // }
 
     // if(phone.length !== 10){
@@ -24,6 +25,14 @@ export async function POST(req:Request){
 
     // if(pincode.length !== 6){
     //   return NextResponse.json({message:"Pincode must be 6 digits"}, {status:400});
+    // }
+    
+    // if(panNo.length !== 10){
+    //   return NextResponse.json({message:"PAN number must be 10 characters"}, {status:400});
+    // }
+
+    // if(aadharNo.length !== 12){
+    //     return NextResponse.json({message:"Aadhar number must be 12 digits"}, {status:400});
     // }
 
     // if(new Date(dob) >= new Date()){

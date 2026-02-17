@@ -49,13 +49,13 @@ const DonationPage = () => {
 
   const createOrder = async (data: DonationFormData) => {
     setLoading(true);
-    const res = await axios.post(`${baseUrl}/api/createOrder`, data);
+    const res = await axios.post(`/api/createOrder`, data);
     const paymentId = res.data.paymentId;
     const paymentData = {
       key: process.env.NEXT_PUBLIC_KEY_ID,
       order_id: res.data.id,
       handler: async (response: any) => {
-        const verifyRes = await fetch(`${baseUrl}/api/verifyOrder`, {
+        const verifyRes = await fetch(`/api/verifyOrder`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ paymentId: paymentId, razorpay_order_id: response.razorpay_order_id, razorpay_payment_id: response.razorpay_payment_id, razorpaySignature: response.razorpay_signature, }),
@@ -74,9 +74,9 @@ const DonationPage = () => {
 
   const createSubscription = async (data: SubscriptionFormData) => {
     setLoading(true);
-    const res = await axios.post(`${baseUrl}/api/createPlan`, data);
+    const res = await axios.post(`/api/createPlan`, data);
     const planId = res.data.plan.id;
-    const subscriptionres = await axios.post(`${baseUrl}/api/createSubscription`, { ...data, planId });
+    const subscriptionres = await axios.post(`/api/createSubscription`, { ...data, planId });
     const { subscriptionId, paymentId } = subscriptionres.data;
 
     const options = {
@@ -85,7 +85,7 @@ const DonationPage = () => {
       name: "Monthly Donation",
       description: "Auto monthly donation via Razorpay",
       handler: async function (response: any) {
-       const subscriptionRes =  await fetch(`${baseUrl}/api/verifySubscription`, {
+       const subscriptionRes =  await fetch(`/api/verifySubscription`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
