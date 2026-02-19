@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import {
     Card,
@@ -17,77 +17,81 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner';
 
 interface FormData {
-  name: string;
-  userName: string;
-  password: string;
+    name: string;
+    userName: string;
+    password: string;
 }
-const page = () => {
+const SignupPage = () => {
     const {
         register,
         handleSubmit
     } = useForm<FormData>()
-    const [loading,setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     async function onSubmit(data: FormData) {
         setLoading(true)
-        console.log(data)
-        const res = await axios.post("/api/signup",data);
-        if(res.data.success){
-            toast.success(res.data.message);
+        try {
+            const res = await axios.post("/api/signup", data);
+            if (res.data.success) {
+                toast.success(res.data.message);
+            }
+        } catch (error: any) {
+            toast.error(error.response?.data?.message || "Something went wrong");
+        } finally {
+            setLoading(false);
         }
-        setLoading(false);
     }
     return (
-      <div className='w-screen h-screen flex items-center justify-center bg-amber-200'>
-          <Card className="w-full max-w-sm">
-              <CardHeader>
-                  <CardTitle>Signup</CardTitle>
-                  <CardDescription>
-                      Enter your username below to login to your account
-                  </CardDescription>
-                  <CardAction>
-                      <Button variant="link">Sign Up</Button>
-                  </CardAction>
-              </CardHeader>
-              <CardContent>
-                  <form onSubmit={handleSubmit(onSubmit)}>
-                      <div className="flex flex-col gap-6">
-                          <div className="grid gap-2">
-                              <Label htmlFor="name">Name</Label>
-                              <Input
-                                  {...register("name")}
-                                  id="name"
-                                  type="text"
-                                  placeholder="Enter your name"
-                                  required
-                              />
-                          </div>
+        <div className='w-screen h-screen flex items-center justify-center bg-amber-200'>
+            <Card className="w-full max-w-sm">
+                <CardHeader>
+                    <CardTitle>Signup</CardTitle>
+                    <CardDescription>
+                        Enter your information below to create your account
+                    </CardDescription>
+                    <CardAction>
+                        <Button variant="link">Sign Up</Button>
+                    </CardAction>
+                </CardHeader>
+                <CardContent>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <div className="flex flex-col gap-6">
+                            <div className="grid gap-2">
+                                <Label htmlFor="name">Name</Label>
+                                <Input
+                                    {...register("name")}
+                                    id="name"
+                                    type="text"
+                                    placeholder="Enter your name"
+                                    required
+                                />
+                            </div>
                             <div className="grid gap-2">
                                 <Label htmlFor="userName">Username</Label>
                                 <Input
                                     {...register("userName")}
                                     id="userName"
                                     type="text"
-                                    placeholder="Enter your name"
+                                    placeholder="Enter your username"
                                     required
                                 />
                             </div>
-                          <div className="grid gap-2">
-                              <div className="flex items-center">
-                                  <Label htmlFor="password">Password</Label>
-                              </div>
-                              <Input {...register("password")} id="password" placeholder='••••••' type="password" required />
-                          </div>
-                  <Button disabled={loading} type="submit" className="w-full">
-                    {loading? "Loading..." : "Signup"}
-                  </Button>
-                      </div>
-                  </form>
-              </CardContent>
-              <CardFooter className="flex-col gap-2">
-              </CardFooter>
-          </Card>
-      </div>
-  )
+                            <div className="grid gap-2">
+                                <div className="flex items-center">
+                                    <Label htmlFor="password">Password</Label>
+                                </div>
+                                <Input {...register("password")} id="password" placeholder='••••••' type="password" required />
+                            </div>
+                            <Button disabled={loading} type="submit" className="w-full">
+                                {loading ? "Loading..." : "Signup"}
+                            </Button>
+                        </div>
+                    </form>
+                </CardContent>
+                <CardFooter className="flex-col gap-2">
+                </CardFooter>
+            </Card>
+        </div>
+    )
 }
 
-export default page
+export default SignupPage
