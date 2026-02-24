@@ -1,3 +1,4 @@
+import { usePathname } from 'next/navigation';
 import React, { useState } from 'react'
 import { IoClose, IoMenuOutline } from 'react-icons/io5'
 import { navigationLInks } from './Header';
@@ -9,9 +10,12 @@ import { useLoading } from '@/context/LoadingContext';
 const MobileMenu = () => {
   const [model, setModel] = useState(false);
   const { setLoading } = useLoading();
+  const pathname = usePathname();
 
-  const handleLinkClick = () => {
-    setLoading(true);
+  const handleLinkClick = (path: string) => {
+    if (pathname !== path) {
+      setLoading(true);
+    }
     setModel(false);
   };
 
@@ -42,7 +46,7 @@ const MobileMenu = () => {
                         className='block text-center py-3 border-b hover:bg-[#867156] hover:text-white'
                         key={idx}
                         href={link.path}
-                        onClick={handleLinkClick}
+                        onClick={() => handleLinkClick(link.path)}
                       >
                         {link.name}
                       </Link>
@@ -60,12 +64,12 @@ const MobileMenu = () => {
                     variant={"link"}
                     asChild
                   >
-                <Link href={"/contactUs"} onClick={handleLinkClick}>
+                <Link href={"/contactUs"} onClick={() => handleLinkClick("/contactUs")}>
                     Contact Us
                 </Link>
                   </Button>
                 <Button asChild className='bg-[#867156] hover:bg-[#8b7e6c] transition-transform duration-300 hover:-translate-y-1 hover:scale-110'>
-                  <Link href={"/donate"} onClick={handleLinkClick}>Donate Now</Link>
+                  <Link href={"/donate"} onClick={() => handleLinkClick("/donate")}>Donate Now</Link>
                 </Button>
               </div>
             </div>

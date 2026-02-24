@@ -82,7 +82,11 @@ const Header = () => {
                       {
                           navigationLInks.map((item, index) =>
                               <Link key={index} href={item!.path}
-                               onClick={() => setLoading(true)}
+                               onClick={() => {
+                                if (pathname !== item!.path) {
+                                  setLoading(true);
+                                }
+                               }}
                               className='inline-block text-sm sm:text-lg hover:text-[#B09065] transition-transform duration-300 hover:scale-110'>{lang === "hn" ? item!.hindiName : item!.name}</Link>
                           )
                       }

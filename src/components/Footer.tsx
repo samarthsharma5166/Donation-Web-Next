@@ -6,6 +6,7 @@ import { Instagram, Facebook, Youtube } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useLoading } from "@/context/LoadingContext";
+import { usePathname } from "next/navigation";
 
 type FooterProps = {
     searchParams?: Record<string, string | string[]>;
@@ -13,6 +14,13 @@ type FooterProps = {
 const Footer = ({ searchParams }: FooterProps ) => {
     const lang = searchParams?.lang === "hn" ? "hn" : "en";
     const { setLoading } = useLoading();
+    const pathname = usePathname();
+
+    const handleLinkClick = (path: string) => {
+        if (pathname !== path) {
+            setLoading(true);
+        }
+    };
 
     return (
         <footer className="relative bg-black text-white">
@@ -23,7 +31,7 @@ const Footer = ({ searchParams }: FooterProps ) => {
                     <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold max-w-2xl leading-snug">
                         Join your hand with us for a better life and beautiful future.
                     </h2>
-                    <Link  href="/donate" onClick={() => setLoading(true)}>
+                    <Link  href="/donate" onClick={() => handleLinkClick("/donate")}>
                         <Button className="mt-6 md:mt-0 bg-[#b08c61] hover:bg-[#9c7c55] text-white rounded-lg px-6 py-3">
                             Donate Now
                         </Button>
@@ -68,17 +76,17 @@ const Footer = ({ searchParams }: FooterProps ) => {
                     <h3 className="text-lg font-semibold mb-3">Policies</h3>
                     <ul className="space-y-3">
                         <li>
-                            <Link href="/contactUs" className="hover:text-[#b08c61]" onClick={() => setLoading(true)}>
+                            <Link href="/contactUs" className="hover:text-[#b08c61]" onClick={() => handleLinkClick("/contactUs")}>
                                 Contact Us
                             </Link>
                         </li>
                         <li>
-                            <Link href="/blogs" className="hover:text-[#b08c61]" onClick={() => setLoading(true)}>
+                            <Link href="/blogs" className="hover:text-[#b08c61]" onClick={() => handleLinkClick("/blogs")}>
                                 Blogs
                             </Link>
                         </li>
                         <li>
-                            <Link href="/aboutUs" className="hover:text-[#b08c61]" onClick={() => setLoading(true)}>
+                            <Link href="/aboutUs" className="hover:text-[#b08c61]" onClick={() => handleLinkClick("/aboutUs")}>
                                 About Us
                             </Link>
                         </li>
@@ -90,17 +98,17 @@ const Footer = ({ searchParams }: FooterProps ) => {
                     <h3 className="text-lg font-semibold mb-3">Resources</h3>
                     <ul className="space-y-3">
                         <li>
-                            <Link href="/privacyPolicy" className="hover:text-[#b08c61]" onClick={() => setLoading(true)}>
+                            <Link href="/privacyPolicy" className="hover:text-[#b08c61]" onClick={() => handleLinkClick("/privacyPolicy")}>
                                 Privacy Policy
                             </Link>
                         </li>
                         <li>
-                            <Link href="/RefundCancellationPolicy" className="hover:text-[#b08c61]" onClick={() => setLoading(true)}>
+                            <Link href="/RefundCancellationPolicy" className="hover:text-[#b08c61]" onClick={() => handleLinkClick("/RefundCancellationPolicy")}>
                                 Refund Policy
                             </Link>
                         </li>
                         <li>
-                            <Link href="/termsOfUse" className="hover:text-[#b08c61]" onClick={() => setLoading(true)}>
+                            <Link href="/termsOfUse" className="hover:text-[#b08c61]" onClick={() => handleLinkClick("/termsOfUse")}>
                                 Terms of Use
                             </Link>
                         </li>
