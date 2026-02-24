@@ -52,7 +52,6 @@ const DonationPage = () => {
   const createOrder = async (data: DonationFormData) => {
     setLoading(true);
     const res = await axiosInstance.post(`/createOrder`, data);
-    console.log(res.data.key_id);
     const paymentId = res.data.paymentId;
     const paymentData = {
       key: res.data.key_id,
@@ -66,7 +65,6 @@ const DonationPage = () => {
         const verifyData = await verifyRes.json();
         if (verifyData.success){ 
           toast.success("Payment verified successfully")
-          console.log(verifyData.invoice);
           setPaymentSuccess(verifyData.invoice);
           // window.open(verifyData.invoice.short_url, "_blank");
         };
@@ -79,7 +77,6 @@ const DonationPage = () => {
   const createSubscription = async (data: SubscriptionFormData) => {
     setLoading(true);
     const res = await axiosInstance.post(`/createPlan`, data);
-    console.log(res)
     const planId = res.data.plan.id;
     const subscriptionres = await axiosInstance.post(`/createSubscription`, { ...data, planId });
     const { subscriptionId, paymentId } = subscriptionres.data;
@@ -169,7 +166,7 @@ const DonationPage = () => {
     }
   };
   const onSubmit = (data: DonationFormData | SubscriptionFormData) => {
-    console.log(isOneTime)
+  
     if (isOneTime) createOrder(data as DonationFormData);
     else createSubscription(data as SubscriptionFormData);
   };
