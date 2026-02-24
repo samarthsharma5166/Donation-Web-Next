@@ -16,6 +16,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
+import { axiosInstance } from "@/helper";
+import { baseUrl } from "@/helper/constant";
 
 interface DonationFormData {
   name: string;
@@ -45,17 +47,17 @@ const DonationPage = () => {
   const [loading,setLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [paymentSuccess, setPaymentSuccess] = useState<boolean | string>(false);
-  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  // const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   const createOrder = async (data: DonationFormData) => {
     setLoading(true);
-    const res = await axios.post(`/api/createOrder`, data);
+    const res = await axiosInstance.post(`/createOrder`, data);
     const paymentId = res.data.paymentId;
     const paymentData = {
       key: process.env.NEXT_PUBLIC_KEY_ID,
       order_id: res.data.id,
       handler: async (response: any) => {
-        const verifyRes = await fetch(`/api/verifyOrder`, {
+        const verifyRes = await fetch(`${baseUrl}/verifyOrder`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ paymentId: paymentId, razorpay_order_id: response.razorpay_order_id, razorpay_payment_id: response.razorpay_payment_id, razorpaySignature: response.razorpay_signature, }),
@@ -63,6 +65,7 @@ const DonationPage = () => {
         const verifyData = await verifyRes.json();
         if (verifyData.success){ 
           toast.success("Payment verified successfully")
+          console.log(verifyData.invoice);
           setPaymentSuccess(verifyData.invoice);
           // window.open(verifyData.invoice.short_url, "_blank");
         };
@@ -74,9 +77,10 @@ const DonationPage = () => {
 
   const createSubscription = async (data: SubscriptionFormData) => {
     setLoading(true);
-    const res = await axios.post(`/api/createPlan`, data);
+    const res = await axiosInstance.post(`/createPlan`, data);
+    console.log(res)
     const planId = res.data.plan.id;
-    const subscriptionres = await axios.post(`/api/createSubscription`, { ...data, planId });
+    const subscriptionres = await axiosInstance.post(`/createSubscription`, { ...data, planId });
     const { subscriptionId, paymentId } = subscriptionres.data;
 
     const options = {
@@ -85,7 +89,7 @@ const DonationPage = () => {
       name: "Monthly Donation",
       description: "Auto monthly donation via Razorpay",
       handler: async function (response: any) {
-       const subscriptionRes =  await fetch(`/api/verifySubscription`, {
+       const subscriptionRes =  await fetch(`${baseUrl}/verifySubscription`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -111,27 +115,60 @@ const DonationPage = () => {
   };
 
 
+  // const downloadInvoice = async (fileName: string) => {
+  //   try {
+  //     // const response = await axiosInstance.get(`/downloadInvoice/${fileName}`);
+  //     // if (!response.ok) throw new Error("Failed to download invoice");
+
+  //     // const blob = await response.data.blob();
+  //     // const url = window.URL.createObjectURL(blob);
+  //     // const link = document.createElement("a");
+  //     // link.href = url;
+  //     // link.setAttribute("download", fileName);
+  //     // document.body.appendChild(link);
+  //     // link.click();
+  //     // link.remove();
+  //     // window.URL.revokeObjectURL(url);
+  //     const res = await axiosInstance.get(`/downloadInvoice/${fileName}`);
+      
+  //   } catch (err) {
+  //     console.error(err);
+  //     toast.error("Unable to download invoice");
+  //   }
+  // };
+
+
   const downloadInvoice = async (fileName: string) => {
     try {
-      const response = await fetch(`/api/downloadInvoice/${fileName}`);
-      if (!response.ok) throw new Error("Failed to download invoice");
+      const response = await axiosInstance.get(
+        `/downloadInvoice/${fileName}`,
+        {
+          responseType: "blob", // VERY IMPORTANT
+        }
+      );
 
-      const blob = await response.blob();
+      const blob = new Blob([response.data], {
+        type: "application/pdf",
+      });
+
       const url = window.URL.createObjectURL(blob);
+
       const link = document.createElement("a");
       link.href = url;
       link.setAttribute("download", fileName);
+
       document.body.appendChild(link);
       link.click();
       link.remove();
+
       window.URL.revokeObjectURL(url);
     } catch (err) {
       console.error(err);
       toast.error("Unable to download invoice");
     }
   };
-
   const onSubmit = (data: DonationFormData | SubscriptionFormData) => {
+    console.log(isOneTime)
     if (isOneTime) createOrder(data as DonationFormData);
     else createSubscription(data as SubscriptionFormData);
   };
@@ -344,7 +381,10 @@ const DonationPage = () => {
                       <>
                         <Field>
                           <FieldLabel>Billing Frequency</FieldLabel>
-                          <Select {...register("period", { required: true })} defaultValue="monthly">
+                          <Select
+                            defaultValue="monthly"
+                            onValueChange={(value) => setValue("period", value, { shouldValidate: true })}
+                          >
                             <SelectTrigger>
                               <SelectValue placeholder="Select billing frequency" />
                             </SelectTrigger>

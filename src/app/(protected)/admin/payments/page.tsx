@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Loader2, ArrowLeft, ArrowRight, CreditCard } from "lucide-react";
+import { axiosInstance } from "@/helper";
 
 const PaymentsPage = () => {
     const [payments, setPayments] = useState<any[]>([]);
@@ -18,8 +19,8 @@ const PaymentsPage = () => {
     const fetchPayments = async () => {
         try {
             setLoading(true);
-            const res = await axios.get(
-                `/api/payments?page=${page}&limit=10&filter=${filter}`
+            const res = await axiosInstance.get(
+                `/payments?page=${page}&limit=10&filter=${filter}`
             );
             const data = res.data;
             setPayments(data.data);

@@ -16,9 +16,10 @@ import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import { toast } from 'sonner'
 import { useRouter } from "next/navigation";
+import { axiosInstance } from '@/helper'
 
 interface FormData {
-    username: string,
+    userName: string,
     password: string
 }
 const page = () => {
@@ -31,9 +32,11 @@ const page = () => {
         async function onSubmit(data: FormData) {
             setLoading(true)
             console.log(data)
-            const res = await axios.post("/api/login",data);
+            const res = await axiosInstance.post("/login",data);
+            console.log(res)
             if(res.data.success){
                 toast.success(res.data.message);
+                localStorage.setItem("token", res.data.token);
                 navigate.push("/admin");
             }
             else{
@@ -56,7 +59,7 @@ const page = () => {
                           <div className="grid gap-2">
                               <Label htmlFor="email">Username</Label>
                               <Input
-                                  {...register("username")}
+                                  {...register("userName")}
                                   id="email"
                                   type="text"
                                   placeholder="Enter your username"

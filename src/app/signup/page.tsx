@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label"
 import axios from 'axios'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner';
+import { axiosInstance } from '@/helper';
 
 interface FormData {
     name: string;
@@ -30,7 +31,7 @@ const SignupPage = () => {
     async function onSubmit(data: FormData) {
         setLoading(true)
         try {
-            const res = await axios.post("/api/signup", data);
+            const res = await axiosInstance.post("/signup", data);
             if (res.data.success) {
                 toast.success(res.data.message);
             }

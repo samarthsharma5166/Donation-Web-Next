@@ -15,7 +15,8 @@ import {
 } from "@/components/ui/pagination"
 import { ThreeDCardDemo } from '@/components/ThreeDCardDemo'
 import { Loader2 } from "lucide-react"
-import { baseUrl } from '@/helper/constant'
+import { baseUrl, ImageUrl } from '@/helper/constant'
+import { axiosInstance } from '@/helper'
 
 interface FormData {
   title: string;
@@ -44,7 +45,7 @@ const Page = () => {
         formData.append("file", data.file[0]);
       }
 
-      const res = await axios.post("/api/blog", formData, {
+      const res = await axiosInstance.post("/blog", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
@@ -63,7 +64,7 @@ const Page = () => {
 
   async function fetchBlogs(page = 1, limit = 9) {
     try {
-      const res = await axios.get(`/api/blog?page=${page}&limit=${limit}`);
+      const res = await axiosInstance.get(`/blog?page=${page}&limit=${limit}`);
       return res.data;
     } catch (error) {
       toast.error("Error fetching blogs");
@@ -115,7 +116,7 @@ const Page = () => {
             >
               <ThreeDCardDemo
                 id={blog.id}
-                src={`${baseUrl}/images/${blog.coverImage}`}
+                src={`${baseUrl}/uploads/${blog.coverImage}`}
                 heading={blog.title}
                 subHeading={blog.body}
               />
@@ -139,7 +140,7 @@ const Page = () => {
                     if (!confirm("Are you sure you want to delete this blog?")) return;
                     try {
                       setLoading(true);
-                      const res = await axios.delete(`/api/blog/${blog.id}`);
+                      const res = await axiosInstance.delete(`/blog/${blog.id}`);
                       if (res.data.success) {
                         toast.success("Blog deleted successfully");
                         loadBlogs(currentPage);

@@ -17,6 +17,7 @@ import {
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { baseUrl } from '@/helper/constant';
+import { axiosInstance } from '@/helper';
 
 type SearchParams = Promise<{ lang: string }>
 
@@ -33,7 +34,7 @@ type SearchParams = Promise<{ lang: string }>
       const [totalPages, setTotalPages] = useState(1);
     async function fetchBlogs(page = 1, limit = 9) {
     try {
-        const res = await axios.get(`/api/blog?page=${page}&limit=${limit}`);
+        const res = await axiosInstance.get(`/blog?page=${page}&limit=${limit}`);
         return res.data;
     } catch (error) {
         toast.error("Error fetching blogs");
@@ -75,7 +76,7 @@ type SearchParams = Promise<{ lang: string }>
                               <ThreeDCardDemo
                                   key={blog.id}
                                   id={blog.id}  
-                                  src={`${baseUrl}/images/${blog.coverImage}`}
+                                  src={`${baseUrl}/uploads/${blog.coverImage}`}
                                   heading={blog.title}
                                   subHeading={blog.body}
                               />

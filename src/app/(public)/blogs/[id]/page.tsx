@@ -1,3 +1,4 @@
+import { axiosInstance } from "@/helper";
 import { baseUrl } from "@/helper/constant";
 import axios from "axios";
 import Link from "next/link";
@@ -10,8 +11,9 @@ type PageProps = {
 export default async function BlogPage({ params }: PageProps) {
   const { id } = await params; // ✅ no need to await
   // || process.env.BASE_URL
-  const res = await axios.get(`${baseUrl}/api/blog/${id}`);
-
+  const res = await axiosInstance.get(`/blog/${id}`);
+  console.log(`${baseUrl}/uploads/${res.data.data.coverImage}`);
+  console.log(res.data)
   return (
     <div>
       <article className="px-4 py-24 mx-auto max-w-7xl">
@@ -23,13 +25,13 @@ export default async function BlogPage({ params }: PageProps) {
             <MdKeyboardArrowLeft /> Back
           </Link>
           <img
-            src={`${process.env.NEXT_PUBLIC_BASE_URL}/images/${res.data.data.coverImage}`}
+            src={`${baseUrl}/uploads/${res.data.data.coverImage}`}
             className="object-cover w-full h-64 bg-center rounded-lg"
             alt="cover"
           />
-          <p className="mt-6 mb-2 text-xs font-semibold tracking-wider uppercase text-primary">
+          {/* <p className="mt-6 mb-2 text-xs font-semibold tracking-wider uppercase text-primary">
             Development
-          </p>
+          </p> */}
           <h1
             className="mb-3 text-3xl font-bold leading-tight text-gray-900 md:text-4xl"
             title={res.data.data.title}

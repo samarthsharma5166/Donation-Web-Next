@@ -16,6 +16,7 @@ import {
 import { Button } from "./ui/button";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { axiosInstance } from "@/helper";
 
 // Menu items.
 const items = [
@@ -55,10 +56,10 @@ export function AppSidebar() {
                 </SidebarGroup>
             </SidebarContent>
             <SidebarFooter >
-                <Button onClick={async()=>{
-                    const res = await axios.get('/api/logout');
-                    if(res.data && res.data.success){
-                        router.push("/")
+                <Button onClick={()=>{
+                    if(typeof window !== "undefined"){
+                        localStorage.removeItem("token");
+                        router.push("/login")
                     }
                 }} className="bg-red-600 text-white hover:bg-red-600 p-4">Logout</Button>
             </SidebarFooter>
