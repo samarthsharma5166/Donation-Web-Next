@@ -4,15 +4,22 @@ import { navigationLInks } from './Header';
 import Link from 'next/link';
 import { Button } from './ui/button';
 import LanguageSelection from './LanguageSelection';
+import { useLoading } from '@/context/LoadingContext';
 
 const MobileMenu = () => {
   const [model, setModel] = useState(false);
+  const { setLoading } = useLoading();
+
+  const handleLinkClick = () => {
+    setLoading(true);
+    setModel(false);
+  };
 
   return (
     <div>
       <IoMenuOutline
         className='size-8 relative z-40'
-        onClick={() => setModel(!model)}
+        onClick={() => setModel(true)}
       />
       {/* ====== Sidebar ====== */}
       {model && (
@@ -35,6 +42,7 @@ const MobileMenu = () => {
                         className='block text-center py-3 border-b hover:bg-[#867156] hover:text-white'
                         key={idx}
                         href={link.path}
+                        onClick={handleLinkClick}
                       >
                         {link.name}
                       </Link>
@@ -52,12 +60,12 @@ const MobileMenu = () => {
                     variant={"link"}
                     asChild
                   >
-                <Link href={"/contactUs"}>
+                <Link href={"/contactUs"} onClick={handleLinkClick}>
                     Contact Us
                 </Link>
                   </Button>
                 <Button asChild className='bg-[#867156] hover:bg-[#8b7e6c] transition-transform duration-300 hover:-translate-y-1 hover:scale-110'>
-                  <Link href={"/donate"}>Donate Now</Link>
+                  <Link href={"/donate"} onClick={handleLinkClick}>Donate Now</Link>
                 </Button>
               </div>
             </div>

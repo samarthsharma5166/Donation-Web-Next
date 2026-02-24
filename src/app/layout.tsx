@@ -51,6 +51,8 @@ export const metadata: Metadata = {
 };
 
 
+import { LoadingProvider } from "@/context/LoadingContext";
+import LoadingHandler from "@/components/LoadingHandler";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -61,8 +63,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
-        <Toaster/>
+        <LoadingProvider>
+          <LoadingHandler />
+          {children}
+          <Toaster />
+        </LoadingProvider>
       </body>
     </html>
   );

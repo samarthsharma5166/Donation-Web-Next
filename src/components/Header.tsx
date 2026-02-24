@@ -7,8 +7,9 @@ import Link from 'next/link';
 import { Button } from './ui/button';
 import MobileMenu from './MobileMenu';
 import LanguageSelection from "./LanguageSelection";
-import { useSearchParams } from "next/navigation";
-
+import { useLoading } from "@/context/LoadingContext";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 // {+++++++++++++++ constants +++++++++++++++}
 const iconClass = "size-3 sm:size-4 transition-transform duration-200 group-hover:scale-125 animate-pulse"
 
@@ -52,6 +53,11 @@ export const navigationLInks = [
 const Header = () => {
     const searchParams = useSearchParams();
     const lang = searchParams.get("lang");
+    const { setLoading } = useLoading();
+    const pathname = usePathname();
+    useEffect(() => {
+        setLoading(false);
+    }, [pathname, setLoading])
   return (
       <header>
         <div className='h-10 hidden md:flex bg-black text-white  items-center'>
@@ -75,7 +81,9 @@ const Header = () => {
                 <div className='space-x-12 hidden sm:block'>
                       {
                           navigationLInks.map((item, index) =>
-                              <Link key={index} href={item!.path} className='inline-block text-sm sm:text-lg hover:text-[#B09065] transition-transform duration-300 hover:scale-110'>{lang === "hn" ? item!.hindiName : item!.name}</Link>
+                              <Link key={index} href={item!.path}
+                               onClick={() => setLoading(true)}
+                              className='inline-block text-sm sm:text-lg hover:text-[#B09065] transition-transform duration-300 hover:scale-110'>{lang === "hn" ? item!.hindiName : item!.name}</Link>
                           )
                       }
                 </div>
