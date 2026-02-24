@@ -47,14 +47,15 @@ const DonationPage = () => {
   const [loading,setLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [paymentSuccess, setPaymentSuccess] = useState<boolean | string>(false);
-  // const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+ 
 
   const createOrder = async (data: DonationFormData) => {
     setLoading(true);
     const res = await axiosInstance.post(`/createOrder`, data);
+    console.log(res.data.key_id);
     const paymentId = res.data.paymentId;
     const paymentData = {
-      key: process.env.NEXT_PUBLIC_KEY_ID,
+      key: res.data.key_id,
       order_id: res.data.id,
       handler: async (response: any) => {
         const verifyRes = await fetch(`${baseUrl}/verifyOrder`, {
@@ -84,7 +85,7 @@ const DonationPage = () => {
     const { subscriptionId, paymentId } = subscriptionres.data;
 
     const options = {
-      key: process.env.NEXT_PUBLIC_KEY_ID,
+      key: subscriptionres.data.key_id,
       subscription_id: subscriptionId,
       name: "Monthly Donation",
       description: "Auto monthly donation via Razorpay",

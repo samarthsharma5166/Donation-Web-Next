@@ -12,6 +12,9 @@ const nextConfig: NextConfig = {
     domains: [
       "https://api.madhavamfoundation.com",
       "api.madhavamfoundation.com",
+      "localhost",
+      "www.madhavamfoundation.com",
+      "madhavamfoundation.com",
     ],
   },
   // images: {
