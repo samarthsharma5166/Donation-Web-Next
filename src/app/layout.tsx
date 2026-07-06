@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     type: "website",
   },
   icons: {
-    icon: "/favicon-custom.png", // Path relative to the public directory
+    icon: "/favicon-custom.png",
   },
 };
 
