@@ -36,9 +36,9 @@ export const metadata: Metadata = {
     siteName: "Madhavam Foundation",
     images: [
       {
-        url: "/Frame 7.png",
+        url: "/meta-image.png",
         width: 1200,
-        height: 630,
+        height: 1200,
         alt: "Madhavam Foundation Logo",
       },
     ],
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     type: "website",
   },
   icons: {
-    icon: "/Frame 7.png", // Path relative to the public directory
+    icon: "/favicon-custom.png", // Path relative to the public directory
   },
 };
 
