@@ -42,6 +42,18 @@ export interface SubscriptionFormData extends DonationFormData {
 }
 
 const DonationPage = () => {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "DonateAction",
+    "name": "Donate to Madhavam Foundation",
+    "description": "Support our initiatives in education, healthcare, and rural empowerment in India. Make a one-time or recurring donation.",
+    "url": "https://www.madhavamfoundation.com/donate",
+    "recipient": {
+      "@type": "NGO",
+      "name": "Madhavam Foundation"
+    }
+  };
+
   const { register, handleSubmit, setValue, reset } = useForm<DonationFormData | SubscriptionFormData>();
   const [isOneTime, setIsOneTime] = useState(true);
   const [loading,setLoading] = useState(false);
@@ -232,6 +244,10 @@ const DonationPage = () => {
         </div>
       }
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Script src="https://checkout.razorpay.com/v1/checkout.js" />
       <Header />
 

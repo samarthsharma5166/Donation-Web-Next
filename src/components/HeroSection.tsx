@@ -4,26 +4,31 @@ import { useSearchParams } from "next/navigation";
 import { Button } from "./ui/button";
 import Link from "next/link";
 
+import Image from "next/image";
+
 const heroSectionContent = [
     {
         id: 0,
-        image: "bg-[url(/slide3.jpeg)]",
+        image: "/slide3.jpeg",
+        alt: "Madhavam Foundation - NGO operations in rural India",
     },
     {
         id: 1,
-        image: "bg-[url(/slide1.png)]",
+        image: "/slide1.png",
         heading: "Lighting the Path to a Brighter Tomorrow",
         subheading: "Empowering underserved communities through education, healthcare, and hope",
         hindiHeading: "एक उज्जवल भविष्य की राह को रोशन करना",
-        hindiSubheading: "शिक्षा, स्वास्थ्य और आशा के माध्यम से वंचित समुदायों को सशक्त बनाना"
+        hindiSubheading: "शिक्षा, स्वास्थ्य और आशा के माध्यम से वंचित समुदायों को सशक्त बनाना",
+        alt: "Empowering underserved communities with education and healthcare",
     },
     {
         id: 2,
-        image: "bg-[url(/slide2.jpg)]",
+        image: "/slide2.jpg",
         heading: "To be the most trustworthy international leading",
         subheading: "Empowering underserved communities through education, healthcare, and hope",
         hindiHeading: "सबसे विश्वसनीय अंतर्राष्ट्रीय अग्रणी बनने की ओर",
-        hindiSubheading: "शिक्षा, स्वास्थ्य और आशा के माध्यम से वंचित समुदायों को सशक्त बनाना"
+        hindiSubheading: "शिक्षा, स्वास्थ्य और आशा के माध्यम से वंचित समुदायों को सशक्त बनाना",
+        alt: "Trustworthy international leading NGO for community empowerment",
     }
 ]
 const HeroSection = () => {
@@ -42,14 +47,22 @@ const HeroSection = () => {
         <div>
             <div className="relative h-[25vh] sm:h-[35vh] md:h-[calc(100vh-5rem)] overflow-hidden">
                 {
-                    heroSectionContent.map((item) =>
+                    heroSectionContent.map((item, i) =>
                         <div
                             key={item.id}
-                            className={`absolute z-10 inset-0 ${item.image} bg-no-repeat md:bg-center bg-cover transition-opacity duration-1000 ease-in-out`}
+                            className={`absolute z-10 inset-0 transition-opacity duration-1000 ease-in-out`}
                             style={{
                                 opacity: item.id === index ? 1 : 0,
                             }}
-                        />
+                        >
+                            <Image
+                                src={item.image}
+                                alt={item.alt}
+                                fill
+                                priority={i === 0}
+                                className="object-cover md:object-center"
+                            />
+                        </div>
                     )
                 }
                 <div className="absolute z-30 inset-0 bg-[#B09065] opacity-20" />

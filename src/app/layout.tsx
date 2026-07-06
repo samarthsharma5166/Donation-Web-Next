@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.madhavamfoundation.com"),
   title: "Madhavam Foundation | Empowering Lives Through Education & Social Welfare",
   description:
     "Madhavam Foundation is a non-profit organization dedicated to uplifting rural communities through education, healthcare, women empowerment, and social welfare programs across India. Join us in building a better and compassionate society.",
@@ -53,6 +54,16 @@ export const metadata: Metadata = {
 
 import { LoadingProvider } from "@/context/LoadingContext";
 import LoadingHandler from "@/components/LoadingHandler";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": ["Organization", "NGO"],
+  "name": "Madhavam Foundation",
+  "url": "https://www.madhavamfoundation.com",
+  "logo": "https://www.madhavamfoundation.com/meta-image.png",
+  "description": "Madhavam Foundation is a non-profit organization dedicated to uplifting rural communities through education, healthcare, women empowerment, and social welfare programs across India."
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -62,6 +73,10 @@ export default function RootLayout({
     <html lang="en">
     <head>
         <meta name="google-site-verification" content="HiS90Vgtf_dChyTDO52NlxVgHtcVeWpPQuacymyXKKI" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
     </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

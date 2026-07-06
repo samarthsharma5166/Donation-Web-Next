@@ -16,8 +16,20 @@ const AboutPage = async ({ searchParams }: { searchParams: SearchParams }) => {
   const { lang } = await searchParams;
   const isHindi = lang === "hn";
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "About Madhavam Foundation",
+    "description": "Madhavam Foundation is dedicated to uplifting humanity through education, healthcare, cultural preservation, and selfless service.",
+    "url": "https://www.madhavamfoundation.com/aboutUs"
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Header />
       <section className="min-h-screen bg-gray-50 px-6 md:px-20 py-16 text-gray-800">
         <div className="max-w-5xl mx-auto">

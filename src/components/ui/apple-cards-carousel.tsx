@@ -290,7 +290,7 @@ export const BlurImage = ({
       height={height}
       loading="lazy"
       decoding="async"
-      alt={alt ? alt : "Background of a beautiful view"}
+      alt={alt ? alt : "Image from Madhavam Foundation"}
       {...rest}
     />
   );

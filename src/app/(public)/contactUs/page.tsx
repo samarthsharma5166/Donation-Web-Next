@@ -12,6 +12,22 @@ import { Phone, Mail, MapPin, Loader2 } from "lucide-react";
 import Footer from "@/components/Footer";
 
 const ContactPage = () => {
+    const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "ContactPage",
+      "name": "Contact Madhavam Foundation",
+      "description": "Get in touch with Madhavam Foundation. Contact us via phone, email, or visit our office in Vrindavan.",
+      "url": "https://www.madhavamfoundation.com/contactUs",
+      "mainEntity": {
+        "@type": "PostalAddress",
+        "streetAddress": "Shree Vidhya Peeth, Sanskrit Chatravvas, Shyam Kuti, Chetra Prikrima Marg",
+        "addressLocality": "Vrindavan, Mathura",
+        "addressRegion": "UP",
+        "postalCode": "281121",
+        "addressCountry": "IN"
+      }
+    };
+
     return (
         <Suspense
             fallback={
@@ -20,6 +36,10 @@ const ContactPage = () => {
                 </div>
             }
         >
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <Header />
             <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 {/* Heading */}
