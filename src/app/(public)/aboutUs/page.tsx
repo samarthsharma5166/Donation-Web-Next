@@ -14,7 +14,7 @@ type SearchParams = Promise<{ lang?: string }>;
 const AboutPage = async ({ searchParams }: { searchParams: SearchParams }) => {
   // ✅ Server-side rendering (async ensures SSR)
   const { lang } = await searchParams;
-  const isHindi = lang === "hn";
+  const isHindi = lang !== "en";
 
   const jsonLd = {
     "@context": "https://schema.org",

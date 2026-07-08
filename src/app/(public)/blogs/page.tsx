@@ -26,7 +26,7 @@ type SearchParams = Promise<{ lang: string }>
 
 
   // const { lang } = await searchParams
-  // const data = lang === "hn" ? "hn" : "en"
+  // const data = lang === "en" ? "en" : "hn"
       const [modelOpen, setModalOpen] = useState(false);
       const [loading, setLoading] = useState(false);
       const [blogs, setBlogs] = useState<any[]>([]);

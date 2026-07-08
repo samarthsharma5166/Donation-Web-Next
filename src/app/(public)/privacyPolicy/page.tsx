@@ -7,8 +7,8 @@ import React from 'react'
 // ✅ Server Component — SSR enabled
 type SearchParams = Promise<{ lang: string }>
 const PrivacyPolicyPage = async ({ searchParams }: { searchParams: SearchParams }) => {
-    const lang = (await searchParams)?.lang || 'en'
-    const isHindi = lang === 'hn'
+    const lang = (await searchParams)?.lang || 'hn'
+    const isHindi = lang !== 'en'
 
     return (
         <>

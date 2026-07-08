@@ -8,8 +8,8 @@ import React from 'react';
 export const dynamic = 'force-dynamic'; // ensures SSR on each request
 type SearchParams = Promise<{ lang: string }>
 const RefundCancellationPage = async ({ searchParams }: { searchParams: SearchParams }) => {
-    const lang = (await searchParams)?.lang || 'en'
-    const isHindi = lang === 'hn'
+    const lang = (await searchParams)?.lang || 'hn'
+    const isHindi = lang !== 'en'
 
     return (
         <>

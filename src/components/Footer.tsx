@@ -12,7 +12,7 @@ type FooterProps = {
     searchParams?: Record<string, string | string[]>;
 };
 const Footer = ({ searchParams }: FooterProps ) => {
-    const lang = searchParams?.lang === "hn" ? "hn" : "en";
+    const lang = searchParams?.lang === "en" ? "en" : "hn";
     const { setLoading } = useLoading();
     const pathname = usePathname();
 

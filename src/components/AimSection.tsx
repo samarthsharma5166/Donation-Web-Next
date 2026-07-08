@@ -115,11 +115,11 @@ type AimSectionProps = {
 };
 
 const AimSection = async({ searchParams }: AimSectionProps) => {
-    const lang = ( searchParams)?.lang === "hn" ? "hn" : "en";
+    const lang = ( searchParams)?.lang === "en" ? "en" : "hn";
 
     return (
         <div className="container p-4 sm:p-0 mx-auto py-12 ">
-            <SectionHeader heading={lang === "hn" ? "ट्रस्ट का उद्देश्य" : "Aim of the Trust"} />
+            <SectionHeader heading={lang !== "en" ? "ट्रस्ट का उद्देश्य" : "Aim of the Trust"} />
             <div className="flex flex-col gap-16 mt-10">
                 {content[lang].map((item, index) => (
                     <div

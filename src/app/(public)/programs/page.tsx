@@ -136,7 +136,7 @@ const programs = {
 type SearchParams = Promise<{ lang: string }>
 const Page = async({ searchParams }: { searchParams: SearchParams }) => {
   const {lang}= await searchParams
-  const data = lang === "hn" ? "hn" : "en"
+  const data = lang === "en" ? "en" : "hn"
   const list = programs[data]
 
   return (
@@ -148,7 +148,7 @@ const Page = async({ searchParams }: { searchParams: SearchParams }) => {
           <Link href={"/donate"}>Donate Now</Link>
         </Button>
         <div className="py-8">
-          <SectionHeader heading={lang === "hn" ? "हमारे कार्यक्रम" : "Our Programs"} />
+          <SectionHeader heading={lang !== "en" ? "हमारे कार्यक्रम" : "Our Programs"} />
         </div>
         <section className="space-y-16 py-20">
           {list.map((item, idx) => (

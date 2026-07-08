@@ -87,7 +87,7 @@ const Header = () => {
                                   setLoading(true);
                                 }
                                }}
-                              className='inline-block text-sm sm:text-lg hover:text-[#B09065] transition-transform duration-300 hover:scale-110'>{lang === "hn" ? item!.hindiName : item!.name}</Link>
+                              className='inline-block text-sm sm:text-lg hover:text-[#B09065] transition-transform duration-300 hover:scale-110'>{lang !== "en" ? item!.hindiName : item!.name}</Link>
                           )
                       }
                 </div>
@@ -95,10 +95,10 @@ const Header = () => {
                 {/* control buttons */}
                 <div className='hidden sm:flex  flex-row items-center gap-3 sm:gap-6'>
                       <Button className='text-[#867156] text-md transition-transform duration-300 hover:scale-110 hover:-translate-y-1' size={"lg"} variant={"link"}>
-                          <Link href={"/contactUs"}>{lang === "hn" ? "संपर्क करें" : "Contact Us"}</Link>
+                          <Link href={"/contactUs"}>{lang !== "en" ? "संपर्क करें" : "Contact Us"}</Link>
                         </Button>
                       <Button className='bg-[#867156] hover:bg-[#8b7e6c] transition-transform duration-300 hover:-translate-y-1 hover:scale-110'>
-                        <Link href={"/donate"}>{lang === "hn" ? "दान करें" : "Donate"}</Link>
+                        <Link href={"/donate"}>{lang !== "en" ? "दान करें" : "Donate"}</Link>
                       </Button>
                       <LanguageSelection/>
                 </div>
